@@ -1,1 +1,137 @@
-export default function Login() {}
+'use client';
+import Image from 'next/image';
+import { useEffect, useState } from 'react';
+import Link from 'next/link';
+
+// components
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+
+// styles
+import '@/app/login/styles.css';
+
+export default function Login() {
+  const images = [
+    {
+      img: '/images/economy.png',
+      left: '-50',
+      top: '10',
+      alt: '경제',
+      animationClass: 'custom-bounce-1',
+    },
+    {
+      img: '/images/life.png',
+      left: '-10',
+      bottom: '10',
+      alt: '생활',
+      animationClass: 'custom-bounce-2',
+    },
+    {
+      img: '/images/politics.png',
+      left: '400',
+      bottom: '30',
+      alt: '정치',
+      animationClass: 'custom-bounce-3',
+    },
+    {
+      img: '/images/science.png',
+      left: '350',
+      top: '50',
+      alt: '과학',
+      animationClass: 'custom-bounce-1',
+    },
+    {
+      img: '/images/society.png',
+      left: '250',
+      bottom: '-100',
+      alt: '사회',
+      animationClass: 'custom-bounce-2',
+    },
+  ];
+  return (
+    <div className="relative bottom-10 flex flex-row w-full h-[420px] items-center justify-around">
+      <div className="imgElement relative">
+        <Image
+          className=""
+          src={'/images/person.png'}
+          alt="사람"
+          width={400}
+          height={400}
+        />
+        {images.map(
+          ({ img, left, top, bottom, alt, animationClass }, index) => {
+            return (
+              <Image
+                key={index}
+                src={img}
+                alt={alt}
+                width={100}
+                height={100}
+                className={`absolute ${animationClass}`}
+                style={{
+                  left: `${left}px`,
+                  top: top ? `${top}px` : 'auto',
+                  bottom: bottom ? `${bottom}px` : 'auto',
+                }}
+              />
+            );
+          }
+        )}
+      </div>
+      <div className="containerAnimations relative top-10 flex flex-col justify-around w-[500px] h-[500px] items-center bg-white rounded-[0.5rem]">
+        <div className="loginElement flex flex-row w-2/4 items-center">
+          <Image
+            src={'/images/news-eye.png'}
+            width={70}
+            height={70}
+            alt="로고"
+          />
+          <div className="font-black text-3xl font-[Open_Sans]">News-eye</div>
+        </div>
+
+        <div className="loginElement flex flex-col w-full gap-5  items-center">
+          <Input
+            type="text"
+            className="w-[400px]"
+            placeholder="아이디를 입력해주세요"
+          />
+          <Input
+            type="password"
+            className="w-[400px]"
+            placeholder="비밀번호를 입력해주세요"
+          />
+        </div>
+
+        <div className="loginElement flex flex-col items-center gap-2 h-[150px] ">
+          <Button
+            className="w-[400px] h-[40px] text-[1rem] rounded-[6px] font-[600] hover:bg-[white] hover:text-black hover:border-[2.5px] hover:border-black font-sans"
+            size="lg"
+          >
+            로그인
+          </Button>
+
+          <Button
+            className="flex flex-row justify-center items-center w-[400px] h-[40px] bg-[#FEE608] hover:bg-[#FEE608] rounded-[6px]"
+            variant="outline"
+          >
+            <Image
+              src={'/images/kakao_login_symbol.png'}
+              alt="로고"
+              width={25}
+              height={25}
+            />
+            <span className="ml-2 text-[1rem] text-base font-sans font-[600]">
+              카카오 로그인
+            </span>
+          </Button>
+
+          <Link href={'/signup'}>
+            <span className="underline decoration-solid text-[0.8rem] text-[#c1c1c1] font-thin cursor-pointer">
+              회원가입
+            </span>
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+}
