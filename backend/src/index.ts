@@ -3,7 +3,7 @@ import morgan from 'morgan';
 import cors from 'cors';
 
 const app: express.Application = express();
-const port: number = 3000;
+const port: number = 4000;
 
 app.use(cors());
 
