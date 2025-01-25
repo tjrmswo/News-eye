@@ -25,9 +25,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        style={{ fontFamily: 'SF_HambakSnow, sans-serif' }}
+        className="flex min-h-screen justify-center"
       >
-        {children}
+        <div className="w-full ">{children}</div>
       </body>
     </html>
   );
