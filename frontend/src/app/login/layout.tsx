@@ -13,9 +13,9 @@ export default function RootLayout({
   return (
     <div
       style={{ fontFamily: 'SF_HambakSnow, sans-serif' }}
-      className="flex min-h-screen items-center justify-center bg-[#f2f2f2]"
+      className="flex min-h-screen items-center justify-center bg-[#f3f3f3]"
     >
-      <div className="w-full">{children}</div>
+      <div className=" w-full ">{children}</div>
     </div>
   );
 }

@@ -9,44 +9,10 @@ import { Input } from '@/components/ui/input';
 // style
 import '@/app/signup/styles.css';
 
+// constants
+import { signupImgElement } from '@/constants/signup';
+
 export default function Signup() {
-  const images = [
-    {
-      img: '/images/economy.png',
-      left: '-50',
-      top: '10',
-      alt: '경제',
-      animationClass: 'custom-bounce-1',
-    },
-    {
-      img: '/images/life.png',
-      left: '-10',
-      bottom: '10',
-      alt: '생활',
-      animationClass: 'custom-bounce-2',
-    },
-    {
-      img: '/images/politics.png',
-      left: '400',
-      bottom: '30',
-      alt: '정치',
-      animationClass: 'custom-bounce-3',
-    },
-    {
-      img: '/images/science.png',
-      left: '350',
-      top: '50',
-      alt: '과학',
-      animationClass: 'custom-bounce-1',
-    },
-    {
-      img: '/images/society.png',
-      left: '250',
-      bottom: '-100',
-      alt: '사회',
-      animationClass: 'custom-bounce-2',
-    },
-  ];
   return (
     <div className="relative bottom-10 flex flex-row w-full h-[420px] items-center justify-around">
       <div className="containerAnimation relative top-10 flex flex-col justify-around w-[500px] h-[500px] items-center bg-[#ffffff] rounded-[0.5rem]">
@@ -106,7 +72,7 @@ export default function Signup() {
           width={400}
           height={400}
         />
-        {images.map(
+        {signupImgElement.map(
           ({ img, left, top, bottom, alt, animationClass }, index) => {
             return (
               <Image

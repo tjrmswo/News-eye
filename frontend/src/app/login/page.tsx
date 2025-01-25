@@ -1,53 +1,26 @@
 'use client';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 // components
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
 // styles
-import '@/app/login/styles.css';
+import './styles.css';
+
+// constants
+import { loginImgElement } from '@/constants/login';
 
 export default function Login() {
-  const images = [
-    {
-      img: '/images/economy.png',
-      left: '-50',
-      top: '10',
-      alt: '경제',
-      animationClass: 'custom-bounce-1',
-    },
-    {
-      img: '/images/life.png',
-      left: '-10',
-      bottom: '10',
-      alt: '생활',
-      animationClass: 'custom-bounce-2',
-    },
-    {
-      img: '/images/politics.png',
-      left: '400',
-      bottom: '30',
-      alt: '정치',
-      animationClass: 'custom-bounce-3',
-    },
-    {
-      img: '/images/science.png',
-      left: '350',
-      top: '50',
-      alt: '과학',
-      animationClass: 'custom-bounce-1',
-    },
-    {
-      img: '/images/society.png',
-      left: '250',
-      bottom: '-100',
-      alt: '사회',
-      animationClass: 'custom-bounce-2',
-    },
-  ];
+  const router = useRouter();
+
+  // 로그인
+  function login() {
+    router.push('/');
+  }
+
   return (
     <div className="relative bottom-10 flex flex-row w-full h-[420px] items-center justify-around">
       <div className="imgElement relative">
@@ -58,7 +31,7 @@ export default function Login() {
           width={400}
           height={400}
         />
-        {images.map(
+        {loginImgElement.map(
           ({ img, left, top, bottom, alt, animationClass }, index) => {
             return (
               <Image
@@ -106,6 +79,7 @@ export default function Login() {
           <Button
             className="w-[400px] h-[40px] text-[1rem] rounded-[6px] font-[600] hover:bg-[white] hover:text-black hover:border-[2.5px] hover:border-black font-sans"
             size="lg"
+            onClick={login}
           >
             로그인
           </Button>
