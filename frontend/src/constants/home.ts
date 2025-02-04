@@ -43,3 +43,16 @@ export const Images = [
     bottom: '270px',
   },
 ];
+
+export const mediaCompanies = [
+  'KBS',
+  'SBS',
+  'MBC',
+  'JTBC',
+  'YTN',
+  '매일경제',
+  '세계일보',
+  '조선일보',
+  '한국일보',
+  '디지털타임스',
+];
