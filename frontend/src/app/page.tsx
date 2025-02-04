@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 
 // libraries
 import anime from 'animejs/lib/anime.es.js';
+import axios from 'axios';
 
 // icons
 import { Search } from 'lucide-react';
@@ -19,7 +20,6 @@ export default function Home() {
   const [isSubjectVisible, setSubjectVisible] = useState<boolean>(false);
   const [isTitleVisible, setTitleVisible] = useState<boolean>(false);
   const [componentChange, setComponentChange] = useState<boolean>(false);
-  const [, setIsAnimating] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -49,18 +49,6 @@ export default function Home() {
   function handleInputComponent() {
     setComponentChange(!componentChange);
   }
-
-  const toggleComponentChange = () => {
-    setIsAnimating(true);
-    setTimeout(() => {
-      setComponentChange((prev) => !prev);
-      setIsAnimating(false);
-    }, 500); // hideTabs 애니메이션과 일치
-  };
-
-  useEffect(() => {
-    console.log(componentChange);
-  }, [componentChange]);
 
   return (
     <div className="min-h-screen flex flex-col items-center">
