@@ -34,14 +34,14 @@ export default function Home() {
           delay: () => anime.random(0, 1000),
           direction: 'reverse',
           complete: () => {
-            setSubjectVisible(true); // 세상 사는 눈을 키운다 보이기
+            setSubjectVisible(true);
             setTimeout(() => {
-              setTitleVisible(true); // News-eye 나중에 보이기
+              setTitleVisible(true);
             }, 500);
           },
         });
       });
-    }, 0); // 0ms 지연을 주어 렌더링 후 함수를 실행
+    }, 0);
 
     return () => clearTimeout(timer);
   }, []);

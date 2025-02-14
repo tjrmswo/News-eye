@@ -5,7 +5,6 @@ import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 // constants
-import { domains } from '@/constants/domains';
 import { mediaCompanies, tabNames } from '@/constants/home';
 
 // types
@@ -13,11 +12,13 @@ import { NewsDataType } from '@/types/home';
 
 // libraries
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
 import { ChartBar, Search } from 'lucide-react';
 
 // styles
 import '@/app/styles.css';
+
+// apis
+import { NewsApiClient } from '../api/newsApi';
 
 export default function Politics() {
   const pathName = usePathname();
@@ -34,10 +35,8 @@ export default function Politics() {
   } = useQuery<NewsDataType[]>({
     queryKey: ['getScienceData'],
     queryFn: async () => {
-      const response = await axios.get(
-        `https://newsapi.org/v2/everything?q=정치&apiKey=${process.env.NEXT_PUBLIC_NEWSAPI_KEY}&page=1&pageSize=100`
-      );
-      const data = response.data.articles;
+      const response = await NewsApiClient.get(`/api/news/search?field=정치`);
+      const data = response.data;
 
       console.log(data);
 
