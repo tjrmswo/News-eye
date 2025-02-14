@@ -1,12 +1,24 @@
 'use client';
-import { tabNames } from '@/constants/home';
-import { DataContext } from '@/contexts/home';
-import { ChartBar, Search } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+
+// constants
+import { tabNames } from '@/constants/home';
+
+// contexts
+import { DataContext } from '@/contexts/home';
+
+// libraries
+import axios from 'axios';
+import { ChartBar, Search } from 'lucide-react';
+import { NewsApiClient } from '../api/newsApi';
 
 export default function NewsDetail() {
+  const [content, setContent] = useState<string[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+
   const { selectedData } = useContext(DataContext); // URL에서 id를 추출
 
   // 컴포넌트 변경 boolean
@@ -15,6 +27,32 @@ export default function NewsDetail() {
   function handleInputComponent() {
     setComponentChange(!componentChange);
   }
+
+  const fetchArticleContent = async () => {
+    try {
+      const response = await NewsApiClient.post('/api/news/content', {
+        url: selectedData.url,
+      });
+      console.log('클라이언트측 데이터 페칭 성공: ', response.data.content);
+      const data = response.data.content as string;
+
+      const control = data.split('\\n');
+      console.log(control);
+
+      setContent(control);
+    } catch (e) {
+      console.error('Error fetching article content:', e);
+      throw e; // 에러를 호출하는 곳으로 전달
+    }
+  };
+
+  useEffect(() => {
+    fetchArticleContent();
+  }, []); // articleUrl이 변경될 때마다 실행
+
+  useEffect(() => {
+    console.log('본문 내용: ', content);
+  }, []);
 
   return (
     <div className="min-h-screen flex flex-col items-center">
@@ -93,7 +131,9 @@ export default function NewsDetail() {
           />
         </div>
         <div className="text-[#5C5959] text-sm">
-          {selectedData?.description}
+          {content.map((c) => (
+            <div className="mb-2">{c}.</div>
+          ))}
         </div>
       </main>
 

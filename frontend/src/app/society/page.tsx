@@ -5,7 +5,6 @@ import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 // constants
-import { domains } from '@/constants/domains';
 import { mediaCompanies, tabNames } from '@/constants/home';
 
 // types
@@ -13,11 +12,13 @@ import { NewsDataType } from '@/types/home';
 
 // libraries
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
 import { ChartBar, Search } from 'lucide-react';
 
 // styles
 import '@/app/styles.css';
+
+// apis
+import { NewsApiClient } from '../api/newsApi';
 
 export default function Society() {
   const pathName = usePathname();
@@ -27,17 +28,13 @@ export default function Society() {
     setComponentChange(!componentChange);
   }
 
-  const {
-    data: SocietyData,
-    refetch: refetchSocietyData,
-    isLoading: isSocietyDataLoading,
-  } = useQuery<NewsDataType[]>({
+  const { data: SocietyData, refetch: refetchSocietyData } = useQuery<
+    NewsDataType[]
+  >({
     queryKey: ['getScienceData'],
     queryFn: async () => {
-      const response = await axios.get(
-        `https://newsapi.org/v2/everything?q=사회&apiKey=${process.env.NEXT_PUBLIC_NEWSAPI_KEY}&page=1&pageSize=100`
-      );
-      const data = response.data.articles;
+      const response = await NewsApiClient.get(`/api/news/search?field=사회`);
+      const data = response.data;
 
       console.log(data);
 

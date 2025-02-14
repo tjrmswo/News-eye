@@ -15,18 +15,11 @@ import { signupImgElement } from '@/constants/signup';
 export default function Signup() {
   return (
     <div className="relative bottom-10 flex flex-row w-full h-[420px] items-center justify-around">
-      <div className="containerAnimation relative top-10 flex flex-col justify-around w-[500px] h-[500px] items-center bg-[#ffffff] rounded-[0.5rem]">
-        <div className="loginElement flex flex-row w-2/4 items-center ">
-          <Image
-            src={'/images/news-eye.png'}
-            width={70}
-            height={70}
-            alt="로고"
-          />
-          <div className="loginElement font-black text-3xl font-[Open_Sans]">
-            Sign Up
-          </div>
+      <div className="containerAnimation relative top-10 flex flex-col justify-around w-[500px] h-[500px] items-center bg-[#ffffff] rounded-[0.5rem] gap-4">
+        <div className="loginElement font-black text-2xl font-[Open_Sans] mt-4">
+          회원가입
         </div>
+
         <div className="loginElement flex flex-col w-full gap-5  items-center">
           <Input
             type="text"
@@ -72,7 +65,7 @@ export default function Signup() {
           width={400}
           height={400}
         />
-        {signupImgElement.map(
+        {/* {signupImgElement.map(
           ({ img, left, top, bottom, alt, animationClass }, index) => {
             return (
               <Image
@@ -90,7 +83,7 @@ export default function Signup() {
               />
             );
           }
-        )}
+        )} */}
       </div>
     </div>
   );

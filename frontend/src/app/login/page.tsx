@@ -21,6 +21,11 @@ export default function Login() {
     router.push('/');
   }
 
+  function kakaoLogin() {
+    const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_REST_API_KEY}&redirect_uri=${process.env.NEXT_PUBLIC_REDIRECT_URI}&response_type=code`;
+    window.location.href = kakaoURL;
+  }
+
   return (
     <div className="relative bottom-10 flex flex-row w-full h-[420px] items-center justify-around">
       <div className="imgElement relative">
@@ -31,7 +36,7 @@ export default function Login() {
           width={400}
           height={400}
         />
-        {loginImgElement.map(
+        {/* {loginImgElement.map(
           ({ img, left, top, bottom, alt, animationClass }, index) => {
             return (
               <Image
@@ -49,7 +54,7 @@ export default function Login() {
               />
             );
           }
-        )}
+        )} */}
       </div>
       <div className="containerAnimations relative top-10 flex flex-col justify-around w-[500px] h-[500px] items-center bg-white rounded-[0.5rem]">
         <div className="loginElement flex flex-row w-2/4 items-center">
@@ -87,6 +92,7 @@ export default function Login() {
           <Button
             className="flex flex-row justify-center items-center w-[400px] h-[40px] bg-[#FEE608] hover:bg-[#FEE608] rounded-[6px]"
             variant="outline"
+            onClick={() => kakaoLogin()}
           >
             <Image
               src={'/images/kakao_login_symbol.png'}
@@ -94,8 +100,8 @@ export default function Login() {
               width={25}
               height={25}
             />
-            <span className="ml-2 text-[1rem] text-base font-sans font-[600]">
-              카카오 로그인
+            <span className="ml-2 text-[1rem] text-base font-sans font-[600] text-[#282828]">
+              카카오 계정으로 로그인
             </span>
           </Button>
 

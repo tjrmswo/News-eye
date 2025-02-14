@@ -5,7 +5,6 @@ import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 // constants
-import { domains } from '@/constants/domains';
 import { mediaCompanies, tabNames } from '@/constants/home';
 
 // types
@@ -13,11 +12,14 @@ import { NewsDataType } from '@/types/home';
 
 // libraries
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
 import { ChartBar, Search } from 'lucide-react';
 
 // styles
 import '@/app/styles.css';
+
+// apis
+import { NewsApiClient } from '../api/newsApi';
+
 export default function Life() {
   const pathName = usePathname();
   const [componentChange, setComponentChange] = useState<boolean>(false);
@@ -26,23 +28,19 @@ export default function Life() {
     setComponentChange(!componentChange);
   }
 
-  const {
-    data: LifeData,
-    refetch: refetchLifeData,
-    isLoading: isLifeDataLoading,
-  } = useQuery<NewsDataType[]>({
-    queryKey: ['getScienceData'],
-    queryFn: async () => {
-      const response = await axios.get(
-        `https://newsapi.org/v2/everything?q=생활&apiKey=${process.env.NEXT_PUBLIC_NEWSAPI_KEY}&page=1&pageSize=100`
-      );
-      const data = response.data.articles;
+  const { data: LifeData, refetch: refetchLifeData } = useQuery<NewsDataType[]>(
+    {
+      queryKey: ['getScienceData'],
+      queryFn: async () => {
+        const response = await NewsApiClient.get(`/api/news/search?field=생활`);
+        const data = response.data;
 
-      console.log(data);
+        console.log(data);
 
-      return data;
-    },
-  });
+        return data;
+      },
+    }
+  );
 
   useEffect(() => {
     refetchLifeData();

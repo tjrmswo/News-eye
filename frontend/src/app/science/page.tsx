@@ -21,6 +21,9 @@ import { ContextType, NewsDataType } from '@/types/home';
 // contexts
 import { DataContext } from '@/contexts/home';
 
+// apis
+import { NewsApiClient } from '../api/newsApi';
+
 export default function Science() {
   const context = useContext<ContextType>(DataContext);
 
@@ -41,12 +44,10 @@ export default function Science() {
   >({
     queryKey: ['getScienceData'],
     queryFn: async () => {
-      const response = await axios.get(
-        `https://newsapi.org/v2/everything?q=과학&apiKey=${process.env.NEXT_PUBLIC_NEWSAPI_KEY}&page=1&pageSize=100`
-      );
-      const data = response.data.articles;
+      const response = await NewsApiClient.get(`/api/news/search?field=과학`);
+      const data = response.data;
 
-      console.log(data);
+      // console.log(data);
 
       return data;
     },
