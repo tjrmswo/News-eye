@@ -6,7 +6,7 @@ export async function POST(req: Request) {
   try {
     const { url } = await req.json(); // 요청 본문에서 URL 추출
 
-    console.log('Fetching content from URL:', url);
+    // console.log('Fetching content from URL:', url);
 
     // 해당 URL에서 데이터를 가져오기
     const response = await axios.get(url); // 외부 API나 웹 페이지에서 데이터 가져오기

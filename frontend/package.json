@@ -37,6 +37,7 @@
     "client-only": "^0.0.1",
     "eslint": "^9.18.0",
     "eslint-config-next": "15.1.6",
+    "eslint-plugin-tailwindcss": "^3.18.0",
     "nanoid": "^5.0.9",
     "picocolors": "^1.1.1",
     "postcss": "^8.5.1",

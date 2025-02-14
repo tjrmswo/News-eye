@@ -4,7 +4,6 @@ import { NewsApiServer } from '@/app/api/newsApi';
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const field = searchParams.get('field');
-  console.log(field);
 
   // field 파라미터 체크
   if (!field || Array.isArray(field)) {

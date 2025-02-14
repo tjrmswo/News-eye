@@ -2,13 +2,13 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 // constants
 import { mediaCompanies, tabNames } from '@/constants/home';
 
 // types
-import { NewsDataType } from '@/types/home';
+import { ContextType, NewsDataType } from '@/types/home';
 
 // libraries
 import { useQuery } from '@tanstack/react-query';
@@ -20,7 +20,13 @@ import '@/app/styles.css';
 // apis
 import { NewsApiClient } from '../api/newsApi';
 
+// contexts
+import { DataContext } from '@/contexts/home';
+
 export default function Politics() {
+  const context = useContext<ContextType>(DataContext);
+  const { getData } = context;
+
   const pathName = usePathname();
   const [componentChange, setComponentChange] = useState<boolean>(false);
 
@@ -28,17 +34,15 @@ export default function Politics() {
     setComponentChange(!componentChange);
   }
 
-  const {
-    data: PoliticsData,
-    refetch: refetchPoliticsData,
-    isLoading: isPoliticsDataLoading,
-  } = useQuery<NewsDataType[]>({
-    queryKey: ['getScienceData'],
+  const { data: PoliticsData, refetch: refetchPoliticsData } = useQuery<
+    NewsDataType[]
+  >({
+    queryKey: ['getPoliticsData'],
     queryFn: async () => {
       const response = await NewsApiClient.get(`/api/news/search?field=정치`);
       const data = response.data;
 
-      console.log(data);
+      // console.log(data);
 
       return data;
     },
@@ -113,30 +117,15 @@ export default function Politics() {
           />
         </Link>
       </header>
-      <div className="w-full min-h-screen flex flex-row ">
-        <aside className="p-2 flex flex-col items-center w-1/5">
-          <span className="relative right-7 text-[#D1CDCD] text-sm font-[800]">
-            언론사
-          </span>
-          <div className="p-2 relative left-9 w-3/4 flex flex-col border-r-[2px]">
-            {mediaCompanies.map((company, i) => (
-              <span
-                key={i}
-                className="w-full p-2 text-sm hover:bg-[#F3F3F3] rounded-[0.4rem]"
-              >
-                {company}
-              </span>
-            ))}
-          </div>
-        </aside>
-
+      <div className="w-full min-h-screen flex flex-row justify-center ">
         <main className=" w-4/5 mb-20 flex flex-row flex-wrap justify-center">
           {PoliticsData ? (
             PoliticsData.map((a, i: number) => {
               return (
                 <div
                   key={i}
-                  className="w-[45%] flex flex-row text-sm cursor-pointer"
+                  className="w-[38%] flex flex-row text-sm cursor-pointer"
+                  onClick={() => getData(a, i)}
                 >
                   <Image
                     className="rounded-[0.4rem] m-2 "

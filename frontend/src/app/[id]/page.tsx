@@ -10,14 +10,13 @@ import { tabNames } from '@/constants/home';
 import { DataContext } from '@/contexts/home';
 
 // libraries
-import axios from 'axios';
 import { ChartBar, Search } from 'lucide-react';
+
+// apis
 import { NewsApiClient } from '../api/newsApi';
 
 export default function NewsDetail() {
   const [content, setContent] = useState<string[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
 
   const { selectedData } = useContext(DataContext); // URL에서 id를 추출
 
@@ -131,8 +130,10 @@ export default function NewsDetail() {
           />
         </div>
         <div className="text-[#5C5959] text-sm">
-          {content.map((c) => (
-            <div className="mb-2">{c}.</div>
+          {content.map((c, i) => (
+            <div key={i} className="mb-2">
+              {c}.
+            </div>
           ))}
         </div>
       </main>

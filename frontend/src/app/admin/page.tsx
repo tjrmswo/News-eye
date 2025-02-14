@@ -1,23 +1,18 @@
 'use client';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-
 // components
 import Dashboard from '@/components/admin/dashboard';
 import Analyst from '@/components/admin/analyst';
-
 // icons
 import {
   ChartBarDecreasing,
   ChartNoAxesCombined,
   LogOut,
   UserRoundX,
-  X,
 } from 'lucide-react';
-
 // types
 import { ComponentsType, IconMapType } from '@/types/admin';
-
 // constants
 import { AdminTabs } from '@/constants/admin';
 import Modal from '@/components/modal';
@@ -61,7 +56,7 @@ export default function Admin() {
       {modal && <div id="modal-container"></div>}
       {modal && (
         <div
-          className="fixed w-full h-full z-4 bg-[rgba(0, 0, 0, 0.15)]"
+          className="fixed size-full z-[4] bg-[rgba(0, 0, 0, 0.15)]"
           onClick={handleModal}
         ></div>
       )}
@@ -82,7 +77,7 @@ export default function Admin() {
               return (
                 <div
                   key={tab.name}
-                  className="w-[100%] h-[25px] flex flex-row items-center hover:bg-[#F3F3F3] rounded-[0.2rem] pl-3 pr-3"
+                  className="w-[100%] h-[25px] flex flex-row items-center hover:bg-[#F3F3F3] rounded-[0.2rem] px-3"
                   onClick={() => {
                     getPageModal(tab.name);
                   }}

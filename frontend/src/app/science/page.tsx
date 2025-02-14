@@ -57,8 +57,6 @@ export default function Science() {
     refetchScienceData();
   }, []);
 
-  selectedData;
-
   useEffect(() => {
     console.log('selectedData: ', selectedData);
   }, [selectedData]);
@@ -129,22 +127,6 @@ export default function Science() {
         </Link>
       </header>
       <div className="w-full min-h-screen flex flex-row justify-center ">
-        {/* <aside className="p-2 flex flex-col items-center w-1/5">
-          <span className="relative right-7 text-[#D1CDCD] text-sm font-[800]">
-            언론사
-          </span>
-          <div className="p-2 relative left-9 w-3/4 flex flex-col border-r-[2px]">
-            {mediaCompanies.map((company, i) => (
-              <span
-                key={i}
-                className="w-full p-2 text-sm hover:bg-[#F3F3F3] rounded-[0.4rem]"
-              >
-                {company}
-              </span>
-            ))}
-          </div>
-        </aside> */}
-
         <main className=" w-4/5 mb-20 flex flex-row flex-wrap justify-center">
           {ScienceData ? (
             ScienceData.map((a: NewsDataType, i: number) => {
