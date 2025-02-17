@@ -20,14 +20,6 @@ export default function KaKaoLoginLoadingPage() {
       return response.data;
     },
   });
-  async function getToken() {
-    const kakaoCode = new URL(window.location.href).searchParams.get('code');
-    const response = await axios.post('/api/kakao', {
-      code: kakaoCode,
-    });
-
-    console.log(response);
-  }
 
   useEffect(() => {
     // 소셜 로그인 실패 시 에러 핸들링 로직 추가 해야함
@@ -38,7 +30,7 @@ export default function KaKaoLoginLoadingPage() {
         router.replace('/');
       }, 5000);
     }
-  }, []);
+  }, [getTokens, router]);
   return (
     <div className="container">
       <div className="macbook">

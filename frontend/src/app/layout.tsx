@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
+
 import './globals.css';
 import { TanStackQueryProvider } from '@/components/provider/QueryClientProvider';
 import { DataProvider } from '@/components/provider/DataProvider';

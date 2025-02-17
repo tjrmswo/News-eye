@@ -1,9 +1,6 @@
 'use client';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-// components
-import Dashboard from '@/components/admin/dashboard';
-import Analyst from '@/components/admin/analyst';
 // icons
 import {
   ChartBarDecreasing,
@@ -11,6 +8,11 @@ import {
   LogOut,
   UserRoundX,
 } from 'lucide-react';
+
+// components
+import Dashboard from '@/components/admin/dashboard';
+import Analyst from '@/components/admin/analyst';
+
 // types
 import { ComponentsType, IconMapType } from '@/types/admin';
 // constants
@@ -52,17 +54,17 @@ export default function Admin() {
   }, [modal]);
 
   return (
-    <div className="flex flex-row w-full min-h-screen bg-[#F4F4F4]">
+    <div className="flex min-h-screen w-full flex-row bg-[#F4F4F4]">
       {modal && <div id="modal-container"></div>}
       {modal && (
         <div
-          className="fixed size-full z-[4] bg-[rgba(0, 0, 0, 0.15)]"
+          className="bg-[rgba(0, 0, 0.15)] fixed z-[4] size-full"
           onClick={handleModal}
         ></div>
       )}
-      <main className="flex flex-row w-full justify-around items-center">
-        <div className="flex flex-col w-[250px] h-[250px] bg-white m-5 rounded-[0.3rem] items-center gap-3">
-          <div className="relative right-3 flex flex-row items-center mt-4">
+      <main className="flex w-full flex-row items-center justify-around">
+        <div className="m-5 flex size-[250px] flex-col items-center gap-3 rounded-[0.3rem] bg-white">
+          <div className="relative right-3 mt-4 flex flex-row items-center">
             <Image
               src={'/images/news-eye.png'}
               alt="로고"
@@ -71,21 +73,21 @@ export default function Admin() {
             />
             <span className="text-[1.2rem]">News-eye</span>
           </div>
-          <div className="flex flex-col w-[150px] h-[120px] justify-between cursor-pointer items-center">
+          <div className="flex h-[120px] w-[150px] cursor-pointer flex-col items-center justify-between">
             {AdminTabs.map((tab) => {
               const IconComponent = IconMap[tab.name];
               return (
                 <div
                   key={tab.name}
-                  className="w-[100%] h-[25px] flex flex-row items-center hover:bg-[#F3F3F3] rounded-[0.2rem] px-3"
+                  className="flex h-[25px] w-full flex-row items-center rounded-[0.2rem] px-3 hover:bg-[#F3F3F3]"
                   onClick={() => {
                     getPageModal(tab.name);
                   }}
                 >
                   {IconComponent ? (
-                    <IconComponent className="w-[18px] h-[18px] ml-2" />
+                    <IconComponent className="ml-2 size-[18px]" />
                   ) : null}
-                  <span className="ml-2 text-[0.9rem] text-center">
+                  <span className="ml-2 text-center text-[0.9rem]">
                     {tab.name}
                   </span>
                 </div>
@@ -93,21 +95,21 @@ export default function Admin() {
             })}
           </div>
         </div>
-        <div className="w-full flex flex-col items-center justify-center h-screen">
-          <div className="w-[89%] h-[90%] bg-white rounded-[0.5rem] p-4">
+        <div className="flex h-screen w-full flex-col items-center justify-center">
+          <div className="h-[90%] w-[89%] rounded-[0.5rem] bg-white p-4">
             {ShowCom[page]}
           </div>
         </div>
         {modal && (
           <Modal handleModal={handleModal} width={26} height={30}>
-            <div className="h-full flex flex-col items-center justify-evenly">
+            <div className="flex h-full flex-col items-center justify-evenly">
               <span>로그아웃 하시겠습니까?</span>
 
-              <div className="w-[70%] flex flex-row justify-between">
-                <button className="w-[100px] border-2 border-[black] rounded-[0.3rem] hover:bg-[black] hover:text-[white]">
+              <div className="flex w-[70%] flex-row justify-between">
+                <button className="w-[100px] rounded-[0.3rem] border-2 border-[black] hover:bg-[black] hover:text-[white]">
                   확인
                 </button>
-                <button className="w-[100px] border-2 border-[black] rounded-[0.3rem] bg-[black] text-[white] hover:border-2 hover:border-[black] hover:text-[black] hover:bg-[white]">
+                <button className="w-[100px] rounded-[0.3rem] border-2 border-[black] bg-[black] text-[white] hover:border-2 hover:border-[black] hover:bg-[white] hover:text-[black]">
                   취소
                 </button>
               </div>

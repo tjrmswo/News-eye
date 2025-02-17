@@ -9,18 +9,15 @@ import { Input } from '@/components/ui/input';
 // style
 import '@/app/signup/styles.css';
 
-// constants
-import { signupImgElement } from '@/constants/signup';
-
 export default function Signup() {
   return (
-    <div className="relative bottom-10 flex flex-row w-full h-[420px] items-center justify-around">
-      <div className="containerAnimation relative top-10 flex flex-col justify-around w-[500px] h-[500px] items-center bg-[#ffffff] rounded-[0.5rem] gap-4">
-        <div className="loginElement font-black text-2xl font-[Open_Sans] mt-4">
+    <div className="relative bottom-10 flex h-[420px] w-full flex-row items-center justify-around">
+      <div className="containerAnimation relative top-10 flex size-[500px] flex-col items-center justify-around gap-4 rounded-[0.5rem] bg-[#ffffff]">
+        <div className="loginElement mt-4 text-2xl font-[Open_Sans] font-black">
           회원가입
         </div>
 
-        <div className="loginElement flex flex-col w-full gap-5  items-center">
+        <div className="loginElement flex w-full flex-col items-center  gap-5">
           <Input
             type="text"
             className="w-[400px]"
@@ -42,16 +39,16 @@ export default function Signup() {
             placeholder="비밀번호 확인"
           />
         </div>
-        <div className="loginElement flex flex-col items-center gap-2 h-[150px] ">
+        <div className="loginElement flex h-[150px] flex-col items-center gap-2 ">
           <Button
-            className="w-[400px] h-[40px] text-[1rem] rounded-[6px] font-[600] hover:bg-[white] hover:text-black hover:border-[2.5px] hover:border-black font-sans"
+            className="h-[40px] w-[400px] rounded-[6px] font-sans text-[1rem] hover:border-[2.5px] hover:border-black hover:bg-[white] hover:text-black"
             size="lg"
           >
             Sign Up
           </Button>
 
           <Link href={'/login'}>
-            <span className="underline decoration-solid text-[0.8rem] text-[#c1c1c1] font-thin cursor-pointer">
+            <span className="cursor-pointer text-[0.8rem] font-thin text-[#c1c1c1] underline decoration-solid">
               로그인
             </span>
           </Link>

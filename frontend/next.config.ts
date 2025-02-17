@@ -1,5 +1,4 @@
 import type { NextConfig } from 'next';
-
 import { domains } from '@/constants/domains';
 
 const nextConfig: NextConfig = {

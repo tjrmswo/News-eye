@@ -1,33 +1,27 @@
 'use client';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import { usePathname } from 'next/navigation';
-
-// constants
-import { tabNames } from '@/constants/home';
 
 // libraries
 import { ChartBar, Search } from 'lucide-react';
-import axios from 'axios';
 import { useQuery } from '@tanstack/react-query';
-
+// constants
+import { tabNames } from '@/constants/home';
 // styles
 import '@/app/styles.css';
-
 // types
 import { ContextType, NewsDataType } from '@/types/home';
-
 // contexts
 import { DataContext } from '@/contexts/home';
-
 // apis
-import { NewsApiClient } from '../api/newsApi';
+import { NewsApiClient } from '@/app/api/newsApi';
 
 export default function Science() {
   const context = useContext<ContextType>(DataContext);
 
-  const { selectedData, getData } = context;
+  const { getData } = context;
 
   // 경로 이름
   const pathName = usePathname();
@@ -39,9 +33,7 @@ export default function Science() {
     setComponentChange(!componentChange);
   }
 
-  const { data: ScienceData, refetch: refetchScienceData } = useQuery<
-    NewsDataType[]
-  >({
+  const { data: ScienceData } = useQuery<NewsDataType[]>({
     queryKey: ['getScienceData'],
     queryFn: async () => {
       const response = await NewsApiClient.get(`/api/news/search?field=과학`);
@@ -53,17 +45,9 @@ export default function Science() {
     },
   });
 
-  useEffect(() => {
-    refetchScienceData();
-  }, []);
-
-  useEffect(() => {
-    console.log('selectedData: ', selectedData);
-  }, [selectedData]);
-
   return (
-    <div className="min-h-screen flex flex-col items-center">
-      <header className="flex flex-row w-[800px] h-[150px] items-center justify-around">
+    <div className="flex min-h-screen flex-col items-center">
+      <header className="flex h-[150px] w-[800px] flex-row items-center justify-around">
         <div className="flex flex-row items-center">
           <Image
             src={'/images/news-eye.png'}
@@ -71,19 +55,19 @@ export default function Science() {
             height={55}
             alt="로고"
           />
-          <span className="font-black text-2xl font-[Open_Sans]">News-eye</span>
+          <span className="text-2xl font-[Open_Sans] font-black">News-eye</span>
         </div>
 
         {componentChange === true ? (
-          <div className="flex items-center justify-center w-[400px]">
-            <div className="input flex items-center justify-center w-[400px] h-[40px] bg-[#FAFAFA] rounded-[0.5rem] text-[#818181]">
-              <input className="w-[380px] h-[30px] bg-[rgba(255,255,255,0)] border-b-2" />
+          <div className="flex w-[400px] items-center justify-center">
+            <div className="input flex h-[40px] w-[400px] items-center justify-center rounded-[0.5rem] bg-[#FAFAFA] text-[#818181]">
+              <input className="h-[30px] w-[380px] border-b-2 bg-[rgba(255,255,255,0)]" />
             </div>
           </div>
         ) : (
           <div
             className={
-              'case1 flex flex-row w-[400px] justify-between font-[Open_Sans]'
+              'case1 flex w-[400px] flex-row justify-between font-[Open_Sans]'
             }
           >
             {tabNames.map((name, i) => {
@@ -91,7 +75,7 @@ export default function Science() {
                 return (
                   <button key={i}>
                     <span
-                      className="p-2 rounded-[1rem] bg-[#f3f3f3] text-[#797979] transition-colors duration-300"
+                      className="rounded-2xl bg-[#f3f3f3] p-2 text-[#797979] transition-colors duration-300"
                       tabIndex={0}
                     >
                       {name.name}
@@ -102,7 +86,7 @@ export default function Science() {
                 return (
                   <Link href={`${name.href}`} key={i}>
                     <span
-                      className="p-2 rounded-[1rem] hover:bg-[#f3f3f3] focus:bg-[#f3f3f3] focus:text-[#797979] cursor-pointer transition-colors duration-300"
+                      className="cursor-pointer rounded-2xl p-2 transition-colors duration-300 hover:bg-[#f3f3f3] focus:bg-[#f3f3f3] focus:text-[#797979]"
                       tabIndex={0}
                     >
                       {name.name}
@@ -116,28 +100,28 @@ export default function Science() {
 
         <Search
           size={30}
-          className="text-[black] cursor-pointer hover:bg-[#f3f3f3] p-1 rounded-[0.2rem]"
+          className="cursor-pointer rounded-[0.2rem] p-1 text-[black] hover:bg-[#f3f3f3]"
           onClick={handleInputComponent}
         />
         <Link href={'/admin'}>
           <ChartBar
-            className="text-[black] cursor-pointer hover:bg-[#f3f3f3] p-1 rounded-[0.2rem]"
+            className="cursor-pointer rounded-[0.2rem] p-1 text-[black] hover:bg-[#f3f3f3]"
             size={30}
           />
         </Link>
       </header>
-      <div className="w-full min-h-screen flex flex-row justify-center ">
-        <main className=" w-4/5 mb-20 flex flex-row flex-wrap justify-center">
+      <div className="flex min-h-screen w-full flex-row justify-center ">
+        <main className=" mb-20 flex w-4/5 flex-row flex-wrap justify-center">
           {ScienceData ? (
             ScienceData.map((a: NewsDataType, i: number) => {
               return (
                 <div
                   key={i}
-                  className="w-[38%] flex flex-row text-sm cursor-pointer"
+                  className="flex w-[38%] cursor-pointer flex-row text-sm"
                   onClick={() => getData(a, i)}
                 >
                   <Image
-                    className="rounded-[0.4rem] m-2 "
+                    className="m-2 rounded-[0.4rem] "
                     src={a.urlToImage ? a.urlToImage : '/images/news-eye.png'}
                     alt="뉴스사진"
                     width={100}
@@ -146,7 +130,7 @@ export default function Science() {
                   <div className="flex flex-col justify-evenly">
                     <span>{a.title.slice(0, 25) + '...'}</span>
                     <span>{a.description.slice(0, 25) + '...'}</span>
-                    <span className="text-[#BEBEBE] text-xs">{a.author}</span>
+                    <span className="text-xs text-[#BEBEBE]">{a.author}</span>
                   </div>
                 </div>
               );
@@ -157,19 +141,19 @@ export default function Science() {
         </main>
       </div>
 
-      <footer className="flex flex-col items-center justify-evenly w-full h-[200px] bg-[#000000]">
+      <footer className="flex h-[200px] w-full flex-col items-center justify-evenly bg-[#000000]">
         <div className="relative left-[50] flex flex-row items-center">
-          <span className="relative top-3 h-[140px] p-10 font-black text-xl font-[Open_Sans] text-white">
+          <span className="relative top-3 h-[140px] p-10 text-xl font-[Open_Sans] font-black text-white">
             News-eye
           </span>
-          <div className="h-[140px] p-10 border-l-[3px] font-black text-sm font-[Open_Sans] text-white">
+          <div className="h-[140px] border-l-[3px] p-10 text-sm font-[Open_Sans] font-black text-white">
             제작자: 서근재
             <br /> 연락처: 010-0000-0000
             <br /> 이메일: example@eaxmple.com
             <br /> 이 프로젝트는 개인 사이드 프로젝트입니다😁
           </div>
         </div>
-        <span className="relative right-8 text-white text-[0.8rem]">
+        <span className="relative right-8 text-[0.8rem] text-white">
           Copyright ⓒ 서근재
         </span>
       </footer>

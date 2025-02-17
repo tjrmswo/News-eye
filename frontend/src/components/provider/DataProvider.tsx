@@ -1,12 +1,12 @@
 'use client';
 import { ReactNode, useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 // contexts
 import { DataContext } from '@/contexts/home';
 
 // types
 import { NewsDataType } from '@/types/home';
-import { useRouter } from 'next/navigation';
 
 export const DataProvider = ({ children }: { children: ReactNode }) => {
   const router = useRouter();

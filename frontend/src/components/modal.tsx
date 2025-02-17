@@ -26,12 +26,12 @@ export default function Modal({
 
   return ReactDOM.createPortal(
     <div
-      className="fixed inset-0 flex items-center justify-center z-50"
+      className="fixed inset-0 z-50 flex items-center justify-center"
       onClick={handleModal}
     >
       <div
         style={{ width: `${width}vw`, height: `${height}vh` }}
-        className="bg-white rounded-[0.5rem] shadow-lg"
+        className="rounded-[0.5rem] bg-white shadow-lg"
         onClick={(e) => e.stopPropagation()}
       >
         <header className="flex flex-row justify-end p-2">

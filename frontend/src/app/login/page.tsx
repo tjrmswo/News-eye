@@ -10,9 +10,6 @@ import { Input } from '@/components/ui/input';
 // styles
 import './styles.css';
 
-// constants
-import { loginImgElement } from '@/constants/login';
-
 export default function Login() {
   const router = useRouter();
 
@@ -27,7 +24,7 @@ export default function Login() {
   }
 
   return (
-    <div className="relative bottom-10 flex flex-row w-full h-[420px] items-center justify-around">
+    <div className="relative bottom-10 flex h-[420px] w-full flex-row items-center justify-around">
       <div className="imgElement relative">
         <Image
           className=""
@@ -36,38 +33,19 @@ export default function Login() {
           width={400}
           height={400}
         />
-        {/* {loginImgElement.map(
-          ({ img, left, top, bottom, alt, animationClass }, index) => {
-            return (
-              <Image
-                key={index}
-                src={img}
-                alt={alt}
-                width={100}
-                height={100}
-                className={`absolute ${animationClass}`}
-                style={{
-                  left: `${left}px`,
-                  top: top ? `${top}px` : 'auto',
-                  bottom: bottom ? `${bottom}px` : 'auto',
-                }}
-              />
-            );
-          }
-        )} */}
       </div>
-      <div className="containerAnimations relative top-10 flex flex-col justify-around w-[500px] h-[500px] items-center bg-white rounded-[0.5rem]">
-        <div className="loginElement flex flex-row w-2/4 items-center">
+      <div className="containerAnimations relative top-10 flex size-[500px] flex-col items-center justify-around rounded-[0.5rem] bg-white">
+        <div className="loginElement flex w-2/4 flex-row items-center">
           <Image
             src={'/images/news-eye.png'}
             width={70}
             height={70}
             alt="로고"
           />
-          <div className="font-black text-3xl font-[Open_Sans]">News-eye</div>
+          <div className="text-3xl font-[Open_Sans] font-black">News-eye</div>
         </div>
 
-        <div className="loginElement flex flex-col w-full gap-5  items-center">
+        <div className="loginElement flex w-full flex-col items-center  gap-5">
           <Input
             type="text"
             className="w-[400px]"
@@ -80,9 +58,9 @@ export default function Login() {
           />
         </div>
 
-        <div className="loginElement flex flex-col items-center gap-2 h-[150px] ">
+        <div className="loginElement flex h-[150px] flex-col items-center gap-2 ">
           <Button
-            className="w-[400px] h-[40px] text-[1rem] rounded-[6px] font-[600] hover:bg-[white] hover:text-black hover:border-[2.5px] hover:border-black font-sans"
+            className="h-[40px] w-[400px] rounded-[6px] font-sans text-[1rem] font-bold hover:border-[2.5px] hover:border-black hover:bg-[white] hover:text-black"
             size="lg"
             onClick={login}
           >
@@ -90,7 +68,7 @@ export default function Login() {
           </Button>
 
           <Button
-            className="flex flex-row justify-center items-center w-[400px] h-[40px] bg-[#FEE608] hover:bg-[#FEE608] rounded-[6px]"
+            className="flex h-[40px] w-[400px] flex-row items-center justify-center rounded-[6px] bg-[#FEE608] hover:bg-[#FEE608]"
             variant="outline"
             onClick={() => kakaoLogin()}
           >
@@ -100,13 +78,13 @@ export default function Login() {
               width={25}
               height={25}
             />
-            <span className="ml-2 text-[1rem] text-base font-sans font-[600] text-[#282828]">
+            <span className="ml-2 font-sans text-base font-bold text-[#282828]">
               카카오 계정으로 로그인
             </span>
           </Button>
 
           <Link href={'/signup'}>
-            <span className="underline decoration-solid text-[0.8rem] text-[#c1c1c1] font-thin cursor-pointer">
+            <span className="cursor-pointer text-[0.8rem] font-thin text-[#c1c1c1] underline decoration-solid">
               회원가입
             </span>
           </Link>

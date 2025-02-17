@@ -94,7 +94,7 @@ export default function Dashboard() {
         </select>
       </div>
 
-      <div className="h-[500px] flex flex-row flex-wrap items-center justify-around">
+      <div className="flex h-[500px] flex-row flex-wrap items-center justify-around">
         <div style={{ width: '550px', height: '300px' }}>
           <Bar data={data} options={options} />
         </div>

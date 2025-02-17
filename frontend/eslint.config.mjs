@@ -14,11 +14,28 @@ const eslintConfig = [
   ...compat.extends('next/core-web-vitals', 'next/typescript'),
   ...tailwind.configs['flat/recommended'],
   {
+    ignores: [
+      'node_modules/',
+      '.next/',
+      'out/',
+      'pnpm-lock.yaml',
+      'package.json',
+    ],
+  },
+  {
     rules: {
+      'tailwindcss/no-custom-classname': 'off',
+      'tailwindcss/classnames-order': 'warn',
       '@typescript-eslint/no-unused-vars': 'warn',
-      'react-hooks/rules-of-hooks': 'error',
+      'react-hooks/rules-of-hooks': 'warn',
       'react-hooks/exhaustive-deps': 'warn',
-      'import/order': ['warn', { 'newlines-between': 'always' }],
+      'import/order': [
+        'off',
+        {
+          groups: [['builtin', 'external', 'internal']],
+          'newlines-between': 'never',
+        },
+      ],
     },
     settings: {
       react: {
