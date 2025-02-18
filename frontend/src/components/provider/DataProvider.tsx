@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { DataContext } from '@/contexts/home';
 
 // types
-import { NewsDataType } from '@/types/home';
+import { NewsDataType } from '@/types/news';
 
 export const DataProvider = ({ children }: { children: ReactNode }) => {
   const router = useRouter();

@@ -19,3 +19,9 @@ export interface ContextType {
   getData: (data: NewsDataType, index: number) => void;
   selectedData: NewsDataType;
 }
+
+export type searchParamsType = {
+  query?: string;
+  sort?: string;
+  display?: number;
+};

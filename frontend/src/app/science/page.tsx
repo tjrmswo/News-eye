@@ -12,7 +12,7 @@ import { tabNames } from '@/constants/home';
 // styles
 import '@/app/styles.css';
 // types
-import { ContextType, NewsDataType } from '@/types/home';
+import { ContextType, NewsDataType } from '@/types/news';
 // contexts
 import { DataContext } from '@/contexts/home';
 // apis

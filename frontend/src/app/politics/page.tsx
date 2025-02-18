@@ -10,7 +10,7 @@ import { ChartBar, Search } from 'lucide-react';
 // constants
 import { tabNames } from '@/constants/home';
 // types
-import { ContextType, NewsDataType } from '@/types/home';
+import { ContextType, NewsDataType } from '@/types/news';
 // styles
 import '@/app/styles.css';
 // apis
