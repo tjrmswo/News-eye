@@ -19,3 +19,9 @@ export interface ContextType {
   getData: (data: NewsDataType, index: number) => void;
   selectedData: NewsDataType;
 }
+
+export interface articleContentType {
+  data: {
+    content: string;
+  };
+}

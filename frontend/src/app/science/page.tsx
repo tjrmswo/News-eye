@@ -59,9 +59,9 @@ export default function Science() {
 
   selectedData;
 
-  useEffect(() => {
-    console.log('selectedData: ', selectedData);
-  }, [selectedData]);
+  // useEffect(() => {
+  //   console.log('selectedData: ', selectedData);
+  // }, [selectedData]);
 
   return (
     <div className="min-h-screen flex flex-col items-center">
