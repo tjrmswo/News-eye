@@ -184,6 +184,19 @@
   .input {
     animation: expand 1s ease-in-out forwards;
   }
+
+  @keyframes showUpArticle {
+    0% {
+      transform: translateY(0px);
+    }
+    100% {
+      transform: translateY(-10px);
+    }
+  }
+
+  .showUpArticles {
+    animation: showUpArticle 0.3s ease-in-out forwards;
+  }
 }
 
 .typewriter {

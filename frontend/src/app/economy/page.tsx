@@ -2,13 +2,13 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 
 // constants
 import { tabNames } from '@/constants/home';
 
 // types
-import { NewsDataType } from '@/types/home';
+import { ContextType, NewsDataType } from '@/types/home';
 
 // libraries
 import { useQuery } from '@tanstack/react-query';
@@ -16,7 +16,12 @@ import { ChartBar, Search } from 'lucide-react';
 
 // apis
 import { NewsApiClient } from '@/app/api/newsApi';
+import { DataContext } from '@/contexts/home';
 export default function Economy() {
+  const context = useContext<ContextType>(DataContext);
+
+  const { getData } = context;
+
   const pathName = usePathname();
   const [componentChange, setComponentChange] = useState<boolean>(false);
 
@@ -101,13 +106,14 @@ export default function Economy() {
         </Link>
       </header>
       <div className="w-full min-h-screen flex flex-row  justify-center">
-        <main className=" w-4/5 mb-20 flex flex-row flex-wrap justify-center">
+        <main className="mb-20 flex flex-row flex-wrap justify-center">
           {EconomyData ? (
             EconomyData.map((a, i: number) => {
               return (
                 <div
                   key={i}
-                  className="w-[38%] flex flex-row text-sm cursor-pointer"
+                  className="hover:showUpArticles w-md flex flex-row justify-between text-sm cursor-pointer hover:shadow-md p-1 pr-3 rounded-md"
+                  onClick={() => getData(a, i)}
                 >
                   <Image
                     className="rounded-[0.4rem] m-2 "

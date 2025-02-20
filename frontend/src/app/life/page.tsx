@@ -2,13 +2,13 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 // constants
 import { tabNames } from '@/constants/home';
 
 // types
-import { NewsDataType } from '@/types/home';
+import { ContextType, NewsDataType } from '@/types/home';
 
 // libraries
 import { useQuery } from '@tanstack/react-query';
@@ -17,7 +17,14 @@ import { ChartBar, Search } from 'lucide-react';
 // apis
 import { NewsApiClient } from '../api/newsApi';
 
+// contexts
+import { DataContext } from '@/contexts/home';
+
 export default function Life() {
+  const context = useContext<ContextType>(DataContext);
+
+  const { getData } = context;
+
   const pathName = usePathname();
   const [componentChange, setComponentChange] = useState<boolean>(false);
 
@@ -110,7 +117,8 @@ export default function Life() {
               return (
                 <div
                   key={i}
-                  className="w-[38%] flex flex-row text-sm cursor-pointer"
+                  className="hover:showUpArticles w-md flex flex-row justify-between text-sm cursor-pointer hover:shadow-md p-1 pr-3 rounded-md"
+                  onClick={() => getData(a, i)}
                 >
                   <Image
                     className="rounded-[0.4rem] m-2 "
