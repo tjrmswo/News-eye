@@ -25,10 +25,8 @@ export default function Society() {
     setComponentChange(!componentChange);
   }
 
-  const { data: SocietyData, refetch: refetchSocietyData } = useQuery<
-    NewsDataType[]
-  >({
-    queryKey: ['getScienceData'],
+  const { data: SocietyData } = useQuery<NewsDataType[]>({
+    queryKey: ['getSocietyData', pathName],
     queryFn: async () => {
       const response = await NewsApiClient.get(`/api/news/category?field=사회`);
       const data = response.data;
@@ -37,11 +35,8 @@ export default function Society() {
 
       return data;
     },
+    staleTime: 60000,
   });
-
-  useEffect(() => {
-    refetchSocietyData();
-  }, []);
 
   return (
     <div className="min-h-screen flex flex-col items-center">
@@ -133,7 +128,15 @@ export default function Society() {
               );
             })
           ) : (
-            <div>데이터 가져오는 중</div>
+            <div className="relative bottom-20 flex items-center justify-center size-full">
+              <div className="typewriter">
+                <div className="slide">
+                  <i></i>
+                </div>
+                <div className="paper"></div>
+                <div className="keyboard"></div>
+              </div>
+            </div>
           )}
         </main>
       </div>

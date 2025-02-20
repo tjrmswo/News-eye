@@ -24,21 +24,16 @@ export default function Economy() {
     setComponentChange(!componentChange);
   }
 
-  const { data: EconomyData, refetch: refetchEconomyData } = useQuery<
-    NewsDataType[]
-  >({
-    queryKey: ['getScienceData'],
+  const { data: EconomyData } = useQuery<NewsDataType[]>({
+    queryKey: ['getEconomyData'],
     queryFn: async () => {
       const response = await NewsApiClient.get(`/api/news/category?field=경제`);
       const data = response.data;
 
       return data;
     },
+    staleTime: 60000,
   });
-
-  useEffect(() => {
-    refetchEconomyData();
-  }, []);
 
   return (
     <div className="min-h-screen flex flex-col items-center">
@@ -130,7 +125,15 @@ export default function Economy() {
               );
             })
           ) : (
-            <div>데이터 가져오는 중</div>
+            <div className="relative bottom-20 flex items-center justify-center size-full">
+              <div className="typewriter">
+                <div className="slide">
+                  <i></i>
+                </div>
+                <div className="paper"></div>
+                <div className="keyboard"></div>
+              </div>
+            </div>
           )}
         </main>
       </div>

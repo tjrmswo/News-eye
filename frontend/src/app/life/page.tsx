@@ -25,25 +25,18 @@ export default function Life() {
     setComponentChange(!componentChange);
   }
 
-  const { data: LifeData, refetch: refetchLifeData } = useQuery<NewsDataType[]>(
-    {
-      queryKey: ['getScienceData'],
-      queryFn: async () => {
-        const response = await NewsApiClient.get(
-          `/api/news/category?field=생활`
-        );
-        const data = response.data;
+  const { data: LifeData } = useQuery<NewsDataType[]>({
+    queryKey: ['getLifeData', pathName],
+    queryFn: async () => {
+      const response = await NewsApiClient.get(`/api/news/category?field=생활`);
+      const data = response.data;
 
-        console.log(data);
+      console.log(data);
 
-        return data;
-      },
-    }
-  );
-
-  useEffect(() => {
-    refetchLifeData();
-  }, []);
+      return data;
+    },
+    staleTime: 60000,
+  });
 
   return (
     <div className="min-h-screen flex flex-col items-center">
@@ -135,7 +128,15 @@ export default function Life() {
               );
             })
           ) : (
-            <div>데이터 가져오는 중</div>
+            <div className="relative bottom-20 flex items-center justify-center size-full">
+              <div className="typewriter">
+                <div className="slide">
+                  <i></i>
+                </div>
+                <div className="paper"></div>
+                <div className="keyboard"></div>
+              </div>
+            </div>
           )}
         </main>
       </div>

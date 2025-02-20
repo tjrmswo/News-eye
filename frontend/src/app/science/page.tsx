@@ -19,11 +19,12 @@ import { DataContext } from '@/contexts/home';
 
 // apis
 import { NewsApiClient } from '@/app/api/newsApi';
+import { useRouter } from 'next/navigation';
 
 export default function Science() {
   const context = useContext<ContextType>(DataContext);
 
-  const { selectedData, getData } = context;
+  const { getData } = context;
 
   // 경로 이름
   const pathName = usePathname();
@@ -35,23 +36,15 @@ export default function Science() {
     setComponentChange(!componentChange);
   }
 
-  const { data: ScienceData, refetch: refetchScienceData } = useQuery<
-    NewsDataType[]
-  >({
-    queryKey: ['getScienceData'],
+  const { data: ScienceData } = useQuery<NewsDataType[]>({
+    queryKey: ['getScienceData', pathName],
     queryFn: async () => {
       const response = await NewsApiClient.get(`/api/news/category?field=과학`);
       const data = response.data;
-
-      // console.log(data);
-
       return data;
     },
+    staleTime: 60000,
   });
-
-  useEffect(() => {
-    refetchScienceData();
-  }, []);
 
   return (
     <div className="min-h-screen flex flex-col items-center">
@@ -144,7 +137,15 @@ export default function Science() {
               );
             })
           ) : (
-            <div>데이터 가져오는 중</div>
+            <div className="relative bottom-20 flex items-center justify-center size-full">
+              <div className="typewriter">
+                <div className="slide">
+                  <i></i>
+                </div>
+                <div className="paper"></div>
+                <div className="keyboard"></div>
+              </div>
+            </div>
           )}
         </main>
       </div>
