@@ -46,4 +46,5 @@ export const domains = [
   'jsksoft.tistory.com',
   'ryueyes11.tistory.com',
   'blog.outsider.ne.kr',
+  'newspeppermint.com',
 ];
