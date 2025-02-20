@@ -14,7 +14,7 @@ import { DataContext } from '@/contexts/home';
 import { ChartBar, Search } from 'lucide-react';
 
 // apis
-import { NewsApiClient } from '../api/newsApi';
+import { NewsApiClient } from '@/app/api/newsApi';
 
 // types
 import { articleContentType } from '@/types/home';
@@ -102,7 +102,7 @@ export default function NewsDetail() {
         ) : (
           <div
             className={
-              'case1 flex flex-row w-[400px] justify-between font-[Open_Sans]'
+              'showTabs flex flex-row w-[400px] justify-between font-[Open_Sans]'
             }
           >
             {tabNames.map((name, i) => {

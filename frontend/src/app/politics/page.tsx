@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 // constants
-import { mediaCompanies, tabNames } from '@/constants/home';
+import { tabNames } from '@/constants/home';
 
 // types
 import { NewsDataType } from '@/types/home';
@@ -15,10 +15,8 @@ import { useQuery } from '@tanstack/react-query';
 import { ChartBar, Search } from 'lucide-react';
 
 // styles
-import '@/app/styles.css';
-
 // apis
-import { NewsApiClient } from '../api/newsApi';
+import { NewsApiClient } from '@/app/api/newsApi';
 
 export default function Politics() {
   const pathName = usePathname();
@@ -28,20 +26,19 @@ export default function Politics() {
     setComponentChange(!componentChange);
   }
 
-  const {
-    data: PoliticsData,
-    refetch: refetchPoliticsData,
-    isLoading: isPoliticsDataLoading,
-  } = useQuery<NewsDataType[]>({
+  const { data: PoliticsData, refetch: refetchPoliticsData } = useQuery<
+    NewsDataType[]
+  >({
     queryKey: ['getScienceData'],
     queryFn: async () => {
-      const response = await NewsApiClient.get(`/api/news/search?field=정치`);
+      const response = await NewsApiClient.get(`/api/news/category?field=정치`);
       const data = response.data;
 
       console.log(data);
 
       return data;
     },
+    enabled: false,
   });
 
   useEffect(() => {
@@ -70,7 +67,7 @@ export default function Politics() {
         ) : (
           <div
             className={
-              'case1 flex flex-row w-[400px] justify-between font-[Open_Sans]'
+              'showTabs flex flex-row w-[400px] justify-between font-[Open_Sans]'
             }
           >
             {tabNames.map((name, i) => {
@@ -113,30 +110,14 @@ export default function Politics() {
           />
         </Link>
       </header>
-      <div className="w-full min-h-screen flex flex-row ">
-        <aside className="p-2 flex flex-col items-center w-1/5">
-          <span className="relative right-7 text-[#D1CDCD] text-sm font-[800]">
-            언론사
-          </span>
-          <div className="p-2 relative left-9 w-3/4 flex flex-col border-r-[2px]">
-            {mediaCompanies.map((company, i) => (
-              <span
-                key={i}
-                className="w-full p-2 text-sm hover:bg-[#F3F3F3] rounded-[0.4rem]"
-              >
-                {company}
-              </span>
-            ))}
-          </div>
-        </aside>
-
+      <div className="w-full min-h-screen flex flex-row justify-center">
         <main className=" w-4/5 mb-20 flex flex-row flex-wrap justify-center">
           {PoliticsData ? (
             PoliticsData.map((a, i: number) => {
               return (
                 <div
                   key={i}
-                  className="w-[45%] flex flex-row text-sm cursor-pointer"
+                  className="w-[38%] flex flex-row text-sm cursor-pointer"
                 >
                   <Image
                     className="rounded-[0.4rem] m-2 "

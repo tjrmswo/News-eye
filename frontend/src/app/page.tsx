@@ -5,14 +5,11 @@ import { useEffect, useState } from 'react';
 
 // libraries
 import anime from 'animejs/lib/anime.es.js';
-import axios from 'axios';
 
 // icons
 import { Search } from 'lucide-react';
 
 // styles
-import '@/app/styles.css';
-
 // constants
 import { Images, tabNames } from '@/constants/home';
 
