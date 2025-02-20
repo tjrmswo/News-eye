@@ -18,4 +18,14 @@ export interface NewsDataType {
 export interface ContextType {
   getData: (data: NewsDataType, index: number) => void;
   selectedData: NewsDataType;
+  componentChange: boolean;
+  handleInputComponent(): void;
+  handleInput: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  searchWord: string;
+}
+
+export interface articleContentType {
+  data: {
+    content: string;
+  };
 }

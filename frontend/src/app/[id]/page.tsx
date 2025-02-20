@@ -1,4 +1,5 @@
 'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
 import { useContext, useEffect, useState } from 'react';
@@ -10,14 +11,16 @@ import { tabNames } from '@/constants/home';
 import { DataContext } from '@/contexts/home';
 
 // libraries
-import axios from 'axios';
 import { ChartBar, Search } from 'lucide-react';
-import { NewsApiClient } from '../api/newsApi';
+
+// apis
+import { NewsApiClient } from '@/app/api/newsApi';
+
+// types
+import { articleContentType } from '@/types/home';
 
 export default function NewsDetail() {
   const [content, setContent] = useState<string[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
 
   const { selectedData } = useContext(DataContext); // URL에서 id를 추출
 
@@ -30,28 +33,51 @@ export default function NewsDetail() {
 
   const fetchArticleContent = async () => {
     try {
-      const response = await NewsApiClient.post('/api/news/content', {
-        url: selectedData.url,
-      });
-      console.log('클라이언트측 데이터 페칭 성공: ', response.data.content);
-      const data = response.data.content as string;
+      const response: articleContentType = await NewsApiClient.post(
+        '/api/news/content',
+        {
+          url: selectedData.url,
+        }
+      );
 
+      const data = response.data.content;
       const control = data.split('\\n');
-      console.log(control);
-
       setContent(control);
+
+      // LocalStorage에 저장: 데이터를 가져온 후
+      const newsData = {
+        ...selectedData,
+        content: control,
+      };
+
+      localStorage.setItem('newsData', JSON.stringify(newsData));
     } catch (e) {
       console.error('Error fetching article content:', e);
-      throw e; // 에러를 호출하는 곳으로 전달
+      throw e;
     }
   };
 
-  useEffect(() => {
-    fetchArticleContent();
-  }, []); // articleUrl이 변경될 때마다 실행
+  function replaceNewsData(field: string) {
+    const newsData = localStorage.getItem('newsData');
+    if (!newsData) {
+      return;
+    }
+    const getFieldData = JSON.parse(newsData);
+
+    return getFieldData[`${field}`];
+  }
 
   useEffect(() => {
-    console.log('본문 내용: ', content);
+    if (!localStorage.getItem('newsData')) {
+      fetchArticleContent();
+    }
+  }, []);
+
+  useEffect(() => {
+    // 컴포넌트가 unmount될 때 로컬 스토리지에서 데이터 삭제
+    return () => {
+      localStorage.removeItem('newsData');
+    };
   }, []);
 
   return (
@@ -76,7 +102,7 @@ export default function NewsDetail() {
         ) : (
           <div
             className={
-              'case1 flex flex-row w-[400px] justify-between font-[Open_Sans]'
+              'showTabs flex flex-row w-[400px] justify-between font-[Open_Sans]'
             }
           >
             {tabNames.map((name, i) => {
@@ -108,32 +134,57 @@ export default function NewsDetail() {
       </header>
       <main className="w-3/5 mb-20 flex flex-col justify-center gap-10">
         <div className="flex flex-col gap-2">
-          <div className="text-[#BEBEBE] text-sm">{selectedData?.author}</div>
-          <div className="text-2xl">{selectedData?.title}</div>
+          <div className="text-[#BEBEBE] text-sm">
+            {selectedData?.author
+              ? selectedData?.author
+              : replaceNewsData('author')}
+          </div>
+          <div className="text-2xl">
+            {selectedData?.title
+              ? selectedData?.title
+              : replaceNewsData('title')}
+          </div>
           <div>
             <div className="text-[#B4B4B4]">
-              입력: {selectedData?.publishedAt}
+              입력:{' '}
+              {selectedData?.publishedAt
+                ? selectedData?.publishedAt
+                : replaceNewsData('publishedAt')}
             </div>
             <Link
               href={selectedData && selectedData.url}
               className="text-sm text-[#d1d1d2]"
             >
-              원문 주소: {selectedData.url}
+              원문 주소:{' '}
+              {selectedData.url ? selectedData.url : replaceNewsData('url')}
             </Link>
           </div>
         </div>
         <div className="flex justify-center">
           <Image
-            src={selectedData?.urlToImage || '/images/news-eye.png'}
+            src={
+              selectedData?.urlToImage
+                ? selectedData?.urlToImage || '/images/news-eye.png'
+                : replaceNewsData('urlToImage')
+            }
             alt="기사사진"
             width={500}
             height={500}
           />
         </div>
         <div className="text-[#5C5959] text-sm">
-          {content.map((c) => (
-            <div className="mb-2">{c}.</div>
-          ))}
+          {content.length > 0
+            ? content.map((c, i) => (
+                <div className="mb-2" key={i}>
+                  {c}.
+                </div>
+              ))
+            : replaceNewsData('content') &&
+              replaceNewsData('content').map((c: string, i: number) => (
+                <div className="mb-2" key={i}>
+                  {c}.
+                </div>
+              ))}
         </div>
       </main>
 

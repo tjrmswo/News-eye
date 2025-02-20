@@ -19,6 +19,8 @@ export const DataContext = createContext<ContextType>({
     url: '',
     urlToImage: '',
   },
+  componentChange: false,
+  handleInputComponent: () => {},
 });
 
 export const useDataContext = () => {
