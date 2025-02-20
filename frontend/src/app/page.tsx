@@ -91,12 +91,7 @@ export default function Home() {
           onClick={handleInputComponent}
         />
       </header>
-      <main
-        className=" w-full h-[430px] mb-20 flex flex-col justify-center items-center"
-        // style={{
-        //   boxShadow: '0px 1px 5px 3px #f1f1f1',
-        // }}
-      >
+      <main className=" w-full h-[430px] mb-20 flex flex-col justify-center items-center">
         {isSubjectVisible && (
           <div className="subject text-5xl animate-showTag">
             세상 사는 눈을 키운다

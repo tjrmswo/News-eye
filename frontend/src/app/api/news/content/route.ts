@@ -38,12 +38,14 @@ export async function POST(req: Request) {
       '다'
     );
 
+    articleBody = articleBody.replace('최대 60자 이내로 입력하세요 ', '');
+
     return NextResponse.json({ content: articleBody }, { status: 200 }); // 본문만 반환
   } catch (err) {
     console.error('Error fetching article content:', err);
     return NextResponse.json(
       { message: 'Internal Server Error!' },
       { status: 500 }
-    ); // 에러 응답 반환
+    );
   }
 }

@@ -1,7 +1,7 @@
 'use client';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
 import { usePathname } from 'next/navigation';
 
 // constants
@@ -23,20 +23,14 @@ import { NewsApiClient } from '@/app/api/newsApi';
 export default function Science() {
   const context = useContext<ContextType>(DataContext);
 
-  const { getData } = context;
+  const { getData, handleInputComponent, componentChange, handleInput } =
+    context;
 
   // 경로 이름
   const pathName = usePathname();
 
-  // 컴포넌트 변경 boolean
-  const [componentChange, setComponentChange] = useState<boolean>(false);
-
-  function handleInputComponent() {
-    setComponentChange(!componentChange);
-  }
-
   const { data: ScienceData } = useQuery<NewsDataType[]>({
-    queryKey: ['getScienceData', pathName],
+    queryKey: ['getScienceData'],
     queryFn: async () => {
       const response = await NewsApiClient.get(`/api/news/category?field=과학`);
       const data = response.data;
@@ -61,7 +55,10 @@ export default function Science() {
         {componentChange === true ? (
           <div className="flex items-center justify-center w-md">
             <div className="input flex items-center justify-center w-md bg-[#FAFAFA] rounded-lg text-[#818181]">
-              <input className="w-sm p-1 bg-[rgba(255,255,255,0)] border-b-2" />
+              <input
+                className="w-sm p-1 bg-[rgba(255,255,255,0)] border-b-2 mb-2"
+                onChange={(e) => handleInput(e)}
+              />
             </div>
           </div>
         ) : (
@@ -111,7 +108,7 @@ export default function Science() {
         </Link>
       </header>
       <div className="w-full min-h-screen flex flex-row justify-center ">
-        <main className="mb-20 flex flex-row flex-wrap justify-center">
+        <main className="w-4/5 mb-20 flex flex-row flex-wrap justify-center">
           {ScienceData ? (
             ScienceData.map((a: NewsDataType, i: number) => {
               return (
@@ -124,8 +121,8 @@ export default function Science() {
                     className="rounded-md m-2"
                     src={a.urlToImage ? a.urlToImage : '/images/news-eye.png'}
                     alt="뉴스사진"
-                    width={100}
-                    height={100}
+                    width={150}
+                    height={150}
                   />
                   <div className="flex flex-col justify-evenly">
                     <span>{a.title.slice(0, 25) + '...'}</span>
@@ -136,13 +133,21 @@ export default function Science() {
               );
             })
           ) : (
-            <div>데이터 가져오는 중</div>
+            <div className="relative bottom-20 flex items-center justify-center size-full">
+              <div className="typewriter">
+                <div className="slide">
+                  <i></i>
+                </div>
+                <div className="paper"></div>
+                <div className="keyboard"></div>
+              </div>
+            </div>
           )}
         </main>
       </div>
 
       <footer className="flex flex-col items-center justify-evenly w-full p-5 bg-[#000000]">
-        <div className="relative left-[50] flex flex-row items-center mb-3 ">
+        <div className="relative left-[50] flex flex-row items-center mb-3">
           <span className="relative top-3 p-10 font-black text-xl font-[Open_Sans] text-white">
             News-eye
           </span>

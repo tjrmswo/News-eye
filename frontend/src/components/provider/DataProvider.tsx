@@ -1,15 +1,16 @@
 'use client';
-import { ReactNode, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 // contexts
 import { DataContext } from '@/contexts/home';
 
 // types
 import { NewsDataType } from '@/types/home';
-import { useRouter } from 'next/navigation';
 
 export const DataProvider = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
+  // [id] 데이터
   const [selectedData, setSelectedData] = useState<NewsDataType>({
     id: 0,
     author: '',
@@ -24,6 +25,10 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
     url: '',
     urlToImage: '',
   });
+  // 컴포넌트 변경 boolean
+  const [componentChange, setComponentChange] = useState<boolean>(false);
+  // 단어 검색
+  const [searchWord, setSearchWord] = useState<string>('');
 
   const getData = (data: Omit<NewsDataType, 'id'>, index: number) => {
     setSelectedData({
@@ -37,8 +42,26 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
     router.push(`/${index}`);
   };
 
+  function handleInputComponent() {
+    setComponentChange(!componentChange);
+  }
+
+  function handleInput(e: React.ChangeEvent<HTMLInputElement>) {
+    const { value } = e.target;
+    setSearchWord(value);
+  }
+
   return (
-    <DataContext.Provider value={{ selectedData, getData }}>
+    <DataContext.Provider
+      value={{
+        selectedData,
+        getData,
+        handleInputComponent,
+        componentChange,
+        handleInput,
+        searchWord,
+      }}
+    >
       {children}
     </DataContext.Provider>
   );
