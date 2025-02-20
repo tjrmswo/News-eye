@@ -1,4 +1,5 @@
 'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
 import { useContext, useEffect, useState } from 'react';
@@ -11,12 +12,14 @@ import { DataContext } from '@/contexts/home';
 
 // libraries
 import { ChartBar, Search } from 'lucide-react';
+
+// apis
 import { NewsApiClient } from '../api/newsApi';
+
+// types
 import { articleContentType } from '@/types/home';
-import { useRouter } from 'next/navigation';
 
 export default function NewsDetail() {
-  const router = useRouter();
   const [content, setContent] = useState<string[]>([]);
 
   const { selectedData } = useContext(DataContext); // URL에서 id를 추출
@@ -36,19 +39,17 @@ export default function NewsDetail() {
           url: selectedData.url,
         }
       );
-      console.log('클라이언트측 데이터 페칭 성공: ', response);
+
       const data = response.data.content;
-
       const control = data.split('\\n');
-      // console.log(control);
-
       setContent(control);
 
       // LocalStorage에 저장: 데이터를 가져온 후
       const newsData = {
         ...selectedData,
-        content: control, // 업데이트된 content를 포함
+        content: control,
       };
+
       localStorage.setItem('newsData', JSON.stringify(newsData));
     } catch (e) {
       console.error('Error fetching article content:', e);
@@ -62,8 +63,6 @@ export default function NewsDetail() {
       return;
     }
     const getFieldData = JSON.parse(newsData);
-
-    console.log(getFieldData[`${field}`]);
 
     return getFieldData[`${field}`];
   }
@@ -143,7 +142,7 @@ export default function NewsDetail() {
           <div className="text-2xl">
             {selectedData?.title
               ? selectedData?.title
-              : replaceNewsData('author')}
+              : replaceNewsData('title')}
           </div>
           <div>
             <div className="text-[#B4B4B4]">
