@@ -1,7 +1,7 @@
 'use client';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 
 // constants
@@ -23,8 +23,14 @@ import { NewsApiClient } from '@/app/api/newsApi';
 export default function Science() {
   const context = useContext<ContextType>(DataContext);
 
-  const { getData, handleInputComponent, componentChange, handleInput } =
-    context;
+  const {
+    getData,
+    handleInputComponent,
+    componentChange,
+    handleInput,
+    keyDownEnter,
+    setComponentChange,
+  } = context;
 
   // 경로 이름
   const pathName = usePathname();
@@ -38,6 +44,10 @@ export default function Science() {
     },
     staleTime: 60000,
   });
+
+  useEffect(() => {
+    setComponentChange(false);
+  }, []);
 
   return (
     <div className="min-h-screen flex flex-col items-center">
@@ -58,6 +68,7 @@ export default function Science() {
               <input
                 className="w-sm p-1 bg-[rgba(255,255,255,0)] border-b-2 mb-2"
                 onChange={(e) => handleInput(e)}
+                onKeyDown={(e) => keyDownEnter(e)}
               />
             </div>
           </div>

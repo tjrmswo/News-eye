@@ -1,51 +1,46 @@
 'use client';
 import Image from 'next/image';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 import { useContext, useEffect } from 'react';
+
+// contexts
+import { DataContext } from '@/contexts/home';
+
+// types
+import { ContextType } from '@/types/home';
+
+// libraries
+import { ChartBar, Search } from 'lucide-react';
 
 // constants
 import { tabNames } from '@/constants/home';
 
-// types
-import { ContextType, NewsDataType } from '@/types/home';
-
-// libraries
-import { useQuery } from '@tanstack/react-query';
-import { ChartBar, Search } from 'lucide-react';
-
-// apis
-import { NewsApiClient } from '@/app/api/newsApi';
-
-// contexts
-import { DataContext } from '@/contexts/home';
-export default function Economy() {
+export default function SearchNews() {
   const context = useContext<ContextType>(DataContext);
 
   const {
-    getData,
     handleInputComponent,
     componentChange,
     handleInput,
     keyDownEnter,
+    searchWord,
+    searchedData,
+    getData,
+    searchNews,
     setComponentChange,
+    setSearchWord,
   } = context;
 
-  const pathName = usePathname();
-
-  const { data: EconomyData } = useQuery<NewsDataType[]>({
-    queryKey: ['getEconomyData'],
-    queryFn: async () => {
-      const response = await NewsApiClient.get(`/api/news/category?field=경제`);
-      const data = response.data;
-
-      return data;
-    },
-    staleTime: 60000,
-  });
-
+  // 새로고침 시 로컬 저장소에서 검색어를 불러와 설정
   useEffect(() => {
-    setComponentChange(false);
+    const storedSearchWord = localStorage.getItem('searchWord');
+    if (storedSearchWord) {
+      setTimeout(() => {
+        setComponentChange(true);
+      }, 100);
+      setSearchWord(storedSearchWord);
+      searchNews(storedSearchWord);
+    }
   }, []);
 
   return (
@@ -63,11 +58,12 @@ export default function Economy() {
 
         {componentChange === true ? (
           <div className="flex items-center justify-center w-md">
-            <div className="input flex items-center justify-center w-md bg-[#FAFAFA] rounded-lg text-[#818181]">
+            <div className="flex items-center justify-center w-md bg-[#FAFAFA] rounded-lg text-[#818181]">
               <input
                 className="w-sm p-1 bg-[rgba(255,255,255,0)] border-b-2 mb-2"
                 onChange={(e) => handleInput(e)}
                 onKeyDown={(e) => keyDownEnter(e)}
+                value={searchWord}
               />
             </div>
           </div>
@@ -77,31 +73,16 @@ export default function Economy() {
               'showTabs flex flex-row w-md justify-between font-[Open_Sans]'
             }
           >
-            {tabNames.map((name, i) => {
-              if (name.href === pathName) {
-                return (
-                  <button key={i}>
-                    <span
-                      className="p-2 rounded-2xl bg-[#f3f3f3] text-[#797979] transition-colors duration-300"
-                      tabIndex={0}
-                    >
-                      {name.name}
-                    </span>
-                  </button>
-                );
-              } else {
-                return (
-                  <Link href={`${name.href}`} key={i}>
-                    <span
-                      className="p-2 rounded-2xl hover:bg-[#f3f3f3] focus:bg-[#f3f3f3] focus:text-[#797979] cursor-pointer transition-colors duration-300"
-                      tabIndex={0}
-                    >
-                      {name.name}
-                    </span>
-                  </Link>
-                );
-              }
-            })}
+            {tabNames.map((name, i) => (
+              <Link href={`${name.href}`} key={i}>
+                <span
+                  className="p-2 rounded-2xl hover:bg-[#f3f3f3] focus:bg-[#f3f3f3] focus:text-[#797979] cursor-pointer transition-colors duration-300"
+                  tabIndex={0}
+                >
+                  {name.name}
+                </span>
+              </Link>
+            ))}
           </div>
         )}
 
@@ -117,31 +98,31 @@ export default function Economy() {
           />
         </Link>
       </header>
-      <div className="w-full min-h-screen flex flex-row  justify-center">
+      <div className="w-full min-h-screen flex flex-row justify-center ">
         <main className="w-4/5 mb-20 flex flex-row flex-wrap justify-center">
-          {EconomyData ? (
-            EconomyData.map((a, i: number) => {
-              return (
-                <div
-                  key={i}
-                  className="hover:showUpArticles w-md flex flex-row justify-between text-sm cursor-pointer hover:shadow-md p-1 pr-3 rounded-md"
-                  onClick={() => getData(a, i)}
-                >
-                  <Image
-                    className="rounded-md m-2"
-                    src={a.urlToImage ? a.urlToImage : '/images/news-eye.png'}
-                    alt="뉴스사진"
-                    width={150}
-                    height={150}
-                  />
-                  <div className="flex flex-col justify-evenly">
-                    <span>{a.title.slice(0, 25) + '...'}</span>
-                    <span>{a.description.slice(0, 25) + '...'}</span>
-                    <span className="text-[#BEBEBE] text-xs">{a.author}</span>
-                  </div>
+          {searchedData ? (
+            searchedData.map((data, i) => (
+              <div
+                key={i}
+                className="hover:showUpArticles w-md flex flex-row justify-between text-sm cursor-pointer hover:shadow-md p-1 pr-3 rounded-md"
+                onClick={() => getData(data, i)}
+              >
+                <Image
+                  className="rounded-md m-2"
+                  src={
+                    data.urlToImage ? data.urlToImage : '/images/news-eye.png'
+                  }
+                  alt="뉴스사진"
+                  width={150}
+                  height={150}
+                />
+                <div className="flex flex-col justify-evenly">
+                  <span>{data.title.slice(0, 25) + '...'}</span>
+                  <span>{data.description.slice(0, 25) + '...'}</span>
+                  <span className="text-[#BEBEBE] text-xs">{data.author}</span>
                 </div>
-              );
-            })
+              </div>
+            ))
           ) : (
             <div className="relative bottom-20 flex items-center justify-center size-full">
               <div className="typewriter">
@@ -155,6 +136,7 @@ export default function Economy() {
           )}
         </main>
       </div>
+
       <footer className="flex flex-col items-center justify-evenly w-full p-5 bg-[#000000]">
         <div className="relative left-[50] flex flex-row items-center mb-3">
           <span className="relative top-3 p-10 font-black text-xl font-[Open_Sans] text-white">

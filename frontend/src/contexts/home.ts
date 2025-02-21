@@ -21,6 +21,28 @@ export const DataContext = createContext<ContextType>({
   },
   componentChange: false,
   handleInputComponent: () => {},
+  handleInput: () => {},
+  searchWord: '',
+  keyDownEnter: () => {},
+  searchedData: [
+    {
+      id: 0,
+      author: '',
+      content: '',
+      description: '',
+      publishedAt: '',
+      source: {
+        id: null,
+        name: null,
+      },
+      title: '',
+      url: '',
+      urlToImage: '',
+    },
+  ],
+  searchNews: () => {},
+  setComponentChange: () => {},
+  setSearchWord: () => {},
 });
 
 export const useDataContext = () => {

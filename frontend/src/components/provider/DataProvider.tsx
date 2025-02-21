@@ -1,12 +1,16 @@
 'use client';
-import { ReactNode, useEffect, useState } from 'react';
+import { ReactNode, useState } from 'react';
 import { useRouter } from 'next/navigation';
-
-// contexts
-import { DataContext } from '@/contexts/home';
 
 // types
 import { NewsDataType } from '@/types/home';
+import { useMutation } from '@tanstack/react-query';
+
+// apis
+import { NewsApiClient } from '@/app/api/newsApi';
+
+// contexts
+import { DataContext } from '@/contexts/home';
 
 export const DataProvider = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
@@ -39,6 +43,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
         name: data.source.name,
       },
     });
+
     router.push(`/${index}`);
   };
 
@@ -49,6 +54,31 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
   function handleInput(e: React.ChangeEvent<HTMLInputElement>) {
     const { value } = e.target;
     setSearchWord(value);
+    localStorage.setItem('searchWord', value);
+  }
+
+  const { data: searchedData, mutate: searchNews } = useMutation<
+    NewsDataType[],
+    Error,
+    string
+  >({
+    mutationKey: ['searchData'],
+    mutationFn: async (searchWord: string) => {
+      const response = await NewsApiClient.post('/api/news/search', {
+        field: searchWord,
+      });
+
+      return response.data;
+    },
+    onSuccess: () => {
+      router.push(`/search`);
+    },
+  });
+
+  function keyDownEnter(e: React.KeyboardEvent<HTMLInputElement>) {
+    if (e.code === 'Enter') {
+      searchNews(searchWord);
+    }
   }
 
   return (
@@ -60,6 +90,11 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
         componentChange,
         handleInput,
         searchWord,
+        keyDownEnter,
+        searchedData,
+        searchNews,
+        setComponentChange,
+        setSearchWord,
       }}
     >
       {children}

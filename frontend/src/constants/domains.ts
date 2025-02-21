@@ -47,4 +47,6 @@ export const domains = [
   'ryueyes11.tistory.com',
   'blog.outsider.ne.kr',
   'newspeppermint.com',
+  'static.inews24.com',
+  'ml-eu.globenewswire.com',
 ];

@@ -2,10 +2,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useContext } from 'react';
-
-// constants
-import { tabNames } from '@/constants/home';
+import { useContext, useEffect } from 'react';
 
 // types
 import { ContextType, NewsDataType } from '@/types/home';
@@ -13,6 +10,9 @@ import { ContextType, NewsDataType } from '@/types/home';
 // libraries
 import { useQuery } from '@tanstack/react-query';
 import { ChartBar, Search } from 'lucide-react';
+
+// constants
+import { tabNames } from '@/constants/home';
 
 // apis
 import { NewsApiClient } from '@/app/api/newsApi';
@@ -23,8 +23,14 @@ import { DataContext } from '@/contexts/home';
 export default function Society() {
   const context = useContext<ContextType>(DataContext);
 
-  const { getData, handleInputComponent, componentChange, handleInput } =
-    context;
+  const {
+    getData,
+    handleInputComponent,
+    componentChange,
+    handleInput,
+    keyDownEnter,
+    setComponentChange,
+  } = context;
 
   const pathName = usePathname();
 
@@ -38,6 +44,10 @@ export default function Society() {
     },
     staleTime: 60000,
   });
+
+  useEffect(() => {
+    setComponentChange(false);
+  }, []);
 
   return (
     <div className="min-h-screen flex flex-col items-center">
@@ -58,6 +68,7 @@ export default function Society() {
               <input
                 className="w-sm p-1 bg-[rgba(255,255,255,0)] border-b-2 mb-2"
                 onChange={(e) => handleInput(e)}
+                onKeyDown={(e) => keyDownEnter(e)}
               />
             </div>
           </div>
