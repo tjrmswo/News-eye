@@ -31,7 +31,7 @@ export default function Modal({
     >
       <div
         style={{ width: `${width}vw`, height: `${height}vh` }}
-        className="rounded-[0.5rem] bg-white shadow-lg"
+        className="rounded-lg bg-white shadow-lg"
         onClick={(e) => e.stopPropagation()}
       >
         <header className="flex flex-row justify-end p-2">

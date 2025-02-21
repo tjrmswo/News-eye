@@ -28,7 +28,7 @@ const eslintConfig = [
       'tailwindcss/classnames-order': 'warn',
       '@typescript-eslint/no-unused-vars': 'warn',
       'react-hooks/rules-of-hooks': 'warn',
-      'react-hooks/exhaustive-deps': 'warn',
+      'react-hooks/exhaustive-deps': 'off',
       'import/order': [
         'off',
         {

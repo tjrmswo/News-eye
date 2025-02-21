@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 import anime from 'animejs/lib/anime.es.js';
 
 // icons
-import { Search } from 'lucide-react';
+import { ChartBar, Search } from 'lucide-react';
 
 // styles
 // constants
@@ -49,7 +49,7 @@ export default function Home() {
 
   return (
     <div className="flex min-h-screen flex-col items-center">
-      <header className="flex h-[150px] w-[800px] flex-row items-center justify-around">
+      <header className="flex w-4xl flex-row items-center justify-around p-10">
         <div className="flex flex-row items-center">
           <Image
             src={'/images/news-eye.png'}
@@ -61,15 +61,15 @@ export default function Home() {
         </div>
 
         {componentChange === true ? (
-          <div className="flex w-[400px] items-center justify-center">
-            <div className="input flex h-[40px] w-[400px] items-center justify-center rounded-[0.5rem] bg-[#FAFAFA] text-[#818181]">
-              <input className="h-[30px] w-[380px] border-b-2 bg-[rgba(255,255,255,0)]" />
+          <div className="flex w-md items-center justify-center">
+            <div className="input flex w-md items-center justify-center rounded-lg bg-[#FAFAFA] text-[#818181]">
+              <input className="mb-2 w-sm border-b-2 bg-[rgba(255,255,255,0)] p-1" />
             </div>
           </div>
         ) : (
           <div
             className={
-              'case1 flex w-[400px] flex-row justify-between font-[Open_Sans]'
+              'showTabs flex w-md flex-row justify-between font-[Open_Sans]'
             }
           >
             {tabNames.map((name, i) => (
@@ -86,55 +86,38 @@ export default function Home() {
         )}
 
         <Search
-          size={20}
-          className="cursor-pointer"
+          size={30}
+          className="cursor-pointer rounded-sm p-1 text-[black] hover:bg-[#f3f3f3]"
           onClick={handleInputComponent}
         />
+        <Link href={'/admin'}>
+          <ChartBar
+            className="cursor-pointer rounded-sm p-1 text-[black] hover:bg-[#f3f3f3]"
+            size={30}
+          />
+        </Link>
       </header>
-      <main className=" w-full h-[430px] mb-20 flex flex-col justify-center items-center">
+      <main className=" mb-20 flex h-md w-full flex-col items-center justify-center">
         {isSubjectVisible && (
           <div className="subject text-5xl ">세상 사는 눈을 키운다</div>
         )}
         {isTitleVisible && (
           <span className="title text-4xl text-[#c1c1c1] ">News-eye</span>
         )}
-
-        <div className="function-based-values-demo">
-          {Images.map((img, i) => {
-            const positionStyle = {
-              left: img.left,
-              right: img.right,
-              top: img.top,
-              bottom: img.bottom,
-            };
-            return (
-              <Image
-                key={i}
-                className="el absolute"
-                src={img.src}
-                data-x={img.dataX}
-                alt={img.alt}
-                width={100}
-                height={100}
-                style={positionStyle}
-              />
-            );
-          })}
-        </div>
       </main>
-      <footer className="flex h-[200px] w-full flex-col items-center justify-evenly bg-[#000000]">
-        <div className="relative left-[50] flex flex-row items-center">
-          <span className="relative top-3 h-[140px] p-10 text-xl font-[Open_Sans] font-black text-white">
+      <footer className="flex w-full flex-col items-center justify-evenly bg-[#000000] p-5">
+        <div className="relative left-[50] mb-3 flex flex-row items-center">
+          <span className="relative top-3 p-10 text-xl font-[Open_Sans] font-black text-white">
             News-eye
           </span>
-          <div className="h-[140px] border-l-[3px] p-10 text-sm font-[Open_Sans] font-black text-white">
+          <div className="border-l-2 p-10 text-sm font-[Open_Sans] font-black text-white">
             제작자: 서근재
             <br /> 연락처: 010-0000-0000
             <br /> 이메일: example@eaxmple.com
             <br /> 이 프로젝트는 개인 사이드 프로젝트입니다😁
           </div>
         </div>
-        <span className="relative right-8 text-[0.8rem] text-white">
+        <span className="relative right-8 text-xs text-white">
           Copyright ⓒ 서근재
         </span>
       </footer>

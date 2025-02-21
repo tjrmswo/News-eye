@@ -50,8 +50,8 @@ export default function Politics() {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col items-center">
-      <header className="flex flex-row w-4xl items-center justify-around p-10">
+    <div className="flex min-h-screen flex-col items-center">
+      <header className="flex w-4xl flex-row items-center justify-around p-10">
         <div className="flex flex-row items-center">
           <Image
             src={'/images/news-eye.png'}
@@ -63,10 +63,10 @@ export default function Politics() {
         </div>
 
         {componentChange === true ? (
-          <div className="flex items-center justify-center w-md">
-            <div className="input flex items-center justify-center w-md bg-[#FAFAFA] rounded-lg text-[#818181]">
+          <div className="flex w-md items-center justify-center">
+            <div className="input flex w-md items-center justify-center rounded-lg bg-[#FAFAFA] text-[#818181]">
               <input
-                className="w-sm p-1 bg-[rgba(255,255,255,0)] border-b-2 mb-2"
+                className="mb-2 w-sm border-b-2 bg-[rgba(255,255,255,0)] p-1"
                 onChange={(e) => handleInput(e)}
                 onKeyDown={(e) => keyDownEnter(e)}
               />
@@ -75,7 +75,7 @@ export default function Politics() {
         ) : (
           <div
             className={
-              'showTabs flex flex-row w-md justify-between font-[Open_Sans]'
+              'showTabs flex w-md flex-row justify-between font-[Open_Sans]'
             }
           >
             {tabNames.map((name, i) => {
@@ -83,7 +83,7 @@ export default function Politics() {
                 return (
                   <button key={i}>
                     <span
-                      className="p-2 rounded-2xl bg-[#f3f3f3] text-[#797979] transition-colors duration-300"
+                      className="rounded-2xl bg-[#f3f3f3] p-2 text-[#797979] transition-colors duration-300"
                       tabIndex={0}
                     >
                       {name.name}
@@ -94,7 +94,7 @@ export default function Politics() {
                 return (
                   <Link href={`${name.href}`} key={i}>
                     <span
-                      className="p-2 rounded-2xl hover:bg-[#f3f3f3] focus:bg-[#f3f3f3] focus:text-[#797979] cursor-pointer transition-colors duration-300"
+                      className="cursor-pointer rounded-2xl p-2 transition-colors duration-300 hover:bg-[#f3f3f3] focus:bg-[#f3f3f3] focus:text-[#797979]"
                       tabIndex={0}
                     >
                       {name.name}
@@ -108,28 +108,28 @@ export default function Politics() {
 
         <Search
           size={30}
-          className="text-[black] cursor-pointer hover:bg-[#f3f3f3] p-1 rounded-sm"
+          className="cursor-pointer rounded-sm p-1 text-[black] hover:bg-[#f3f3f3]"
           onClick={handleInputComponent}
         />
         <Link href={'/admin'}>
           <ChartBar
-            className="text-[black] cursor-pointer hover:bg-[#f3f3f3] p-1 rounded-sm"
+            className="cursor-pointer rounded-sm p-1 text-[black] hover:bg-[#f3f3f3]"
             size={30}
           />
         </Link>
       </header>
-      <div className="w-full min-h-screen flex flex-row justify-center  ">
-        <main className="w-4/5 mb-20 flex flex-row flex-wrap justify-center">
+      <div className="flex min-h-screen w-full flex-row justify-center  ">
+        <main className="mb-20 flex w-4/5 flex-row flex-wrap justify-center">
           {PoliticsData ? (
             PoliticsData.map((a, i: number) => {
               return (
                 <div
                   key={i}
-                  className="hover:showUpArticles w-md flex flex-row justify-between text-sm cursor-pointer hover:shadow-md p-1 pr-3 rounded-md"
+                  className="hover:showUpArticles flex w-md cursor-pointer flex-row justify-between rounded-md p-1 pr-3 text-sm hover:shadow-md"
                   onClick={() => getData(a, i)}
                 >
                   <Image
-                    className="rounded-md m-2"
+                    className="m-2 rounded-md"
                     src={a.urlToImage ? a.urlToImage : '/images/news-eye.png'}
                     alt="뉴스사진"
                     width={150}
@@ -144,7 +144,7 @@ export default function Politics() {
               );
             })
           ) : (
-            <div className="relative bottom-20 flex items-center justify-center size-full">
+            <div className="relative bottom-20 flex size-full items-center justify-center">
               <div className="typewriter">
                 <div className="slide">
                   <i></i>
@@ -156,19 +156,19 @@ export default function Politics() {
           )}
         </main>
       </div>
-      <footer className="flex flex-col items-center justify-evenly w-full p-5 bg-[#000000]">
-        <div className="relative left-[50] flex flex-row items-center mb-3">
-          <span className="relative top-3 p-10 font-black text-xl font-[Open_Sans] text-white">
+      <footer className="flex w-full flex-col items-center justify-evenly bg-[#000000] p-5">
+        <div className="relative left-[50] mb-3 flex flex-row items-center">
+          <span className="relative top-3 p-10 text-xl font-[Open_Sans] font-black text-white">
             News-eye
           </span>
-          <div className="p-10 border-l-2 font-black text-sm font-[Open_Sans] text-white">
+          <div className="border-l-2 p-10 text-sm font-[Open_Sans] font-black text-white">
             제작자: 서근재
             <br /> 연락처: 010-0000-0000
             <br /> 이메일: example@eaxmple.com
             <br /> 이 프로젝트는 개인 사이드 프로젝트입니다😁
           </div>
         </div>
-        <span className="relative right-8 text-white text-xs">
+        <span className="relative right-8 text-xs text-white">
           Copyright ⓒ 서근재
         </span>
       </footer>

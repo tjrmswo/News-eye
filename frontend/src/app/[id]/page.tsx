@@ -20,7 +20,7 @@ import { articleContentType } from '@/types/news';
 export default function NewsDetail() {
   const [content, setContent] = useState<string[]>([]);
 
-  const { selectedData } = useContext(DataContext); // URL에서 id를 추출
+  const { selectedData, handleInput, keyDownEnter } = useContext(DataContext); // URL에서 id를 추출
 
   // 컴포넌트 변경 boolean
   const [componentChange, setComponentChange] = useState<boolean>(false);
@@ -72,9 +72,15 @@ export default function NewsDetail() {
     };
   }, []);
 
+  useEffect(() => {
+    if (!localStorage.getItem('newsData')) {
+      fetchArticleContent();
+    }
+  }, []);
+
   return (
     <div className="flex min-h-screen flex-col items-center">
-      <header className="flex h-[150px] w-[800px] flex-row items-center justify-around">
+      <header className="flex w-4xl flex-row items-center justify-around p-10">
         <div className="flex flex-row items-center">
           <Image
             src={'/images/news-eye.png'}
@@ -86,22 +92,26 @@ export default function NewsDetail() {
         </div>
 
         {componentChange === true ? (
-          <div className="flex items-center justify-center w-[400px]">
-            <div className="input flex items-center justify-center w-[400px] h-[40px] bg-[#FAFAFA] rounded-lg text-[#818181]">
-              <input className="w-[380px] h-[30px] bg-[rgba(255,255,255,0)] border-b-2" />
+          <div className="flex w-md items-center justify-center">
+            <div className="input flex w-md items-center justify-center rounded-lg bg-[#FAFAFA] text-[#818181]">
+              <input
+                className="mb-2 w-sm border-b-2 bg-[rgba(255,255,255,0)] p-1"
+                onChange={(e) => handleInput(e)}
+                onKeyDown={(e) => keyDownEnter(e)}
+              />
             </div>
           </div>
         ) : (
           <div
             className={
-              'showTabs flex flex-row w-[400px] justify-between font-[Open_Sans]'
+              'showTabs flex w-md flex-row justify-between font-[Open_Sans]'
             }
           >
             {tabNames.map((name, i) => {
               return (
                 <Link href={`${name.href}`} key={i}>
                   <span
-                    className="p-2 rounded-2xl hover:bg-[#f3f3f3] focus:bg-[#f3f3f3] focus:text-[#797979] cursor-pointer transition-colors duration-300"
+                    className="cursor-pointer rounded-2xl p-2 transition-colors duration-300 hover:bg-[#f3f3f3] focus:bg-[#f3f3f3] focus:text-[#797979]"
                     tabIndex={0}
                   >
                     {name.name}
@@ -114,19 +124,19 @@ export default function NewsDetail() {
 
         <Search
           size={30}
-          className="cursor-pointer rounded-[0.2rem] p-1 text-[black] hover:bg-[#f3f3f3]"
+          className="cursor-pointer rounded-sm p-1 text-[black] hover:bg-[#f3f3f3]"
           onClick={handleInputComponent}
         />
         <Link href={'/admin'}>
           <ChartBar
-            className="cursor-pointer rounded-[0.2rem] p-1 text-[black] hover:bg-[#f3f3f3]"
+            className="cursor-pointer rounded-sm p-1 text-[black] hover:bg-[#f3f3f3]"
             size={30}
           />
         </Link>
       </header>
       <main className="mb-20 flex w-3/5 flex-col justify-center gap-10">
         <div className="flex flex-col gap-2">
-          <div className="text-[#BEBEBE] text-sm">
+          <div className="text-sm text-[#BEBEBE]">
             {selectedData?.author
               ? selectedData?.author
               : replaceNewsData('author')}
@@ -164,7 +174,7 @@ export default function NewsDetail() {
             height={500}
           />
         </div>
-        <div className="text-[#5C5959] text-sm">
+        <div className="text-sm text-[#5C5959]">
           {content.length > 0
             ? content.map((c, i) => (
                 <div className="mb-2" key={i}>
@@ -180,19 +190,19 @@ export default function NewsDetail() {
         </div>
       </main>
 
-      <footer className="flex h-[200px] w-full flex-col items-center justify-evenly bg-[#000000]">
-        <div className="relative left-[50] flex flex-row items-center">
-          <span className="relative top-3 h-[140px] p-10 text-xl font-[Open_Sans] font-black text-white">
+      <footer className="flex w-full flex-col items-center justify-evenly bg-[#000000] p-5">
+        <div className="relative left-[50] mb-3 flex flex-row items-center">
+          <span className="relative top-3 p-10 text-xl font-[Open_Sans] font-black text-white">
             News-eye
           </span>
-          <div className="h-[140px] border-l-[3px] p-10 text-sm font-[Open_Sans] font-black text-white">
+          <div className="border-l-2 p-10 text-sm font-[Open_Sans] font-black text-white">
             제작자: 서근재
             <br /> 연락처: 010-0000-0000
             <br /> 이메일: example@eaxmple.com
             <br /> 이 프로젝트는 개인 사이드 프로젝트입니다😁
           </div>
         </div>
-        <span className="relative right-8 text-[0.8rem] text-white">
+        <span className="relative right-8 text-xs text-white">
           Copyright ⓒ 서근재
         </span>
       </footer>

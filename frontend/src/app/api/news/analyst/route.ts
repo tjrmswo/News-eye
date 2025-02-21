@@ -55,7 +55,7 @@ export async function GET(req: Request) {
 
   // console.log(descriptions);
 
-  const keywordCount: Object = {};
+  const keywordCount: object = {};
 
   descriptions.forEach((element: string) => {
     const words = element.split(/\s+/); // 텍스트를 단어 단위로 분리

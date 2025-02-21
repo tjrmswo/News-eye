@@ -96,7 +96,7 @@ export default function Admin() {
           </div>
         </div>
         <div className="flex h-screen w-full flex-col items-center justify-center">
-          <div className="h-[90%] w-[89%] rounded-[0.5rem] bg-white p-4">
+          <div className="h-[90%] w-[89%] rounded-lg bg-white p-4">
             {ShowCom[page]}
           </div>
         </div>
