@@ -4,15 +4,15 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useContext, useEffect } from 'react';
 
-// constants
-import { tabNames } from '@/constants/home';
-
 // types
 import { ContextType, NewsDataType } from '@/types/home';
 
 // libraries
 import { useQuery } from '@tanstack/react-query';
 import { ChartBar, Search } from 'lucide-react';
+
+// constants
+import { tabNames } from '@/constants/home';
 
 // apis
 import { NewsApiClient } from '@/app/api/newsApi';

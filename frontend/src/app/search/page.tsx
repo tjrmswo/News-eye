@@ -3,9 +3,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useContext, useEffect } from 'react';
 
-// constants
-import { tabNames } from '@/constants/home';
-
 // contexts
 import { DataContext } from '@/contexts/home';
 
@@ -14,6 +11,9 @@ import { ContextType } from '@/types/home';
 
 // libraries
 import { ChartBar, Search } from 'lucide-react';
+
+// constants
+import { tabNames } from '@/constants/home';
 
 export default function SearchNews() {
   const context = useContext<ContextType>(DataContext);

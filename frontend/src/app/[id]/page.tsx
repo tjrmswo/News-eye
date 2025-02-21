@@ -7,11 +7,11 @@ import { useContext, useEffect, useState } from 'react';
 // constants
 import { tabNames } from '@/constants/home';
 
-// contexts
-import { DataContext } from '@/contexts/home';
-
 // libraries
 import { ChartBar, Search } from 'lucide-react';
+
+// contexts
+import { DataContext } from '@/contexts/home';
 
 // apis
 import { NewsApiClient } from '@/app/api/newsApi';
@@ -95,7 +95,7 @@ export default function NewsDetail() {
 
         {componentChange === true ? (
           <div className="flex items-center justify-center w-[400px]">
-            <div className="input flex items-center justify-center w-[400px] h-[40px] bg-[#FAFAFA] rounded-[0.5rem] text-[#818181]">
+            <div className="input flex items-center justify-center w-[400px] h-[40px] bg-[#FAFAFA] rounded-lg text-[#818181]">
               <input className="w-[380px] h-[30px] bg-[rgba(255,255,255,0)] border-b-2" />
             </div>
           </div>
@@ -109,7 +109,7 @@ export default function NewsDetail() {
               return (
                 <Link href={`${name.href}`} key={i}>
                   <span
-                    className="p-2 rounded-[1rem] hover:bg-[#f3f3f3] focus:bg-[#f3f3f3] focus:text-[#797979] cursor-pointer transition-colors duration-300"
+                    className="p-2 rounded-2xl hover:bg-[#f3f3f3] focus:bg-[#f3f3f3] focus:text-[#797979] cursor-pointer transition-colors duration-300"
                     tabIndex={0}
                   >
                     {name.name}

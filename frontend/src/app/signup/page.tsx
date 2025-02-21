@@ -9,13 +9,10 @@ import { Input } from '@/components/ui/input';
 // style
 import '@/app/signup/styles.css';
 
-// constants
-import { signupImgElement } from '@/constants/signup';
-
 export default function Signup() {
   return (
     <div className="relative bottom-10 flex flex-row w-full h-[420px] items-center justify-around">
-      <div className="containerAnimation relative top-10 flex flex-col justify-around w-[500px] h-[500px] items-center bg-[#ffffff] rounded-[0.5rem] gap-4">
+      <div className="containerAnimation relative top-10 flex flex-col justify-around size-[500px] items-center bg-[#ffffff] rounded-[0.5rem] gap-4">
         <div className="loginElement font-black text-2xl font-[Open_Sans] mt-4">
           회원가입
         </div>
@@ -44,7 +41,7 @@ export default function Signup() {
         </div>
         <div className="loginElement flex flex-col items-center gap-2 h-[150px] ">
           <Button
-            className="w-[400px] h-[40px] text-[1rem] rounded-[6px] font-[600] hover:bg-[white] hover:text-black hover:border-[2.5px] hover:border-black font-sans"
+            className="w-[400px] h-[40px] text-[1rem] rounded-[6px] hover:bg-[white] hover:text-black hover:border-[2.5px] hover:border-black font-sans"
             size="lg"
           >
             Sign Up

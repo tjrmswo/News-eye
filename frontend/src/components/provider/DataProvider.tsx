@@ -2,13 +2,15 @@
 import { ReactNode, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
-// contexts
-import { DataContext } from '@/contexts/home';
-
 // types
 import { NewsDataType } from '@/types/home';
 import { useMutation } from '@tanstack/react-query';
+
+// apis
 import { NewsApiClient } from '@/app/api/newsApi';
+
+// contexts
+import { DataContext } from '@/contexts/home';
 
 export const DataProvider = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
@@ -31,21 +33,6 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
   const [componentChange, setComponentChange] = useState<boolean>(false);
   // 단어 검색
   const [searchWord, setSearchWord] = useState<string>('');
-  // 검색된 데이터
-  const [findData, setFindData] = useState<NewsDataType>({
-    id: 0,
-    author: '',
-    content: '',
-    description: '',
-    publishedAt: '',
-    source: {
-      id: null,
-      name: null,
-    },
-    title: '',
-    url: '',
-    urlToImage: '',
-  });
 
   const getData = (data: Omit<NewsDataType, 'id'>, index: number) => {
     setSelectedData({
