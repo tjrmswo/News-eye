@@ -11,9 +11,9 @@ import '@/app/signup/styles.css';
 
 export default function Signup() {
   return (
-    <div className="relative bottom-10 flex h-[420px] w-full flex-row items-center justify-around">
-      <div className="containerAnimation relative top-10 flex size-[500px] flex-col items-center justify-around gap-4 rounded-[0.5rem] bg-[#ffffff]">
-        <div className="loginElement mt-4 text-2xl font-[Open_Sans] font-black">
+    <div className="relative bottom-10 flex flex-row w-full h-[420px] items-center justify-around">
+      <div className="containerAnimation relative top-10 flex flex-col justify-around size-[500px] items-center bg-[#ffffff] rounded-[0.5rem] gap-4">
+        <div className="loginElement font-black text-2xl font-[Open_Sans] mt-4">
           회원가입
         </div>
 
@@ -41,7 +41,7 @@ export default function Signup() {
         </div>
         <div className="loginElement flex h-[150px] flex-col items-center gap-2 ">
           <Button
-            className="h-[40px] w-[400px] rounded-[6px] font-sans text-[1rem] hover:border-[2.5px] hover:border-black hover:bg-[white] hover:text-black"
+            className="w-[400px] h-[40px] text-[1rem] rounded-[6px] hover:bg-[white] hover:text-black hover:border-[2.5px] hover:border-black font-sans"
             size="lg"
           >
             Sign Up

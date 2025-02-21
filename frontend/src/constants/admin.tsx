@@ -8,18 +8,18 @@ import {
 export const AdminTabs = [
   {
     name: 'Dashboard',
-    icons: <ChartBarDecreasing className="ml-2 size-[18px]" />,
+    icons: <ChartBarDecreasing className="size-[18px] ml-2" />,
   },
   {
     name: 'Analyst',
-    icons: <ChartNoAxesCombined className="ml-2 size-[18px]" />,
+    icons: <ChartNoAxesCombined className="size-[18px] ml-2" />,
   },
   {
     name: 'LogOut',
-    icons: <LogOut className="ml-2 size-[18px]" />,
+    icons: <LogOut className="size-[18px] ml-2" />,
   },
   {
     name: 'DeleteID',
-    icons: <UserRoundX className="ml-2 size-[18px]" />,
+    icons: <UserRoundX className="size-[18px] ml-2" />,
   },
 ];

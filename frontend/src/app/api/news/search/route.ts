@@ -1,17 +1,9 @@
+import axios from 'axios';
 import { NextResponse } from 'next/server';
 import { NewsApiServer } from '@/app/api/newsApi';
 
-export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
-  const field = searchParams.get('field');
-
-  // field 파라미터 체크
-  if (!field || Array.isArray(field)) {
-    return NextResponse.json(
-      { message: 'Field parameter is required and must be a string' },
-      { status: 400 }
-    );
-  }
+export async function POST(req: Request) {
+  const { field } = await req.json();
 
   try {
     const newsData = await NewsApiServer.get(
@@ -21,12 +13,12 @@ export async function GET(request: Request) {
     if (newsData.data.articles.length > 0) {
       return NextResponse.json(newsData.data.articles, { status: 200 });
     } else {
-      return NextResponse.json({ message: 'No news data' }, { status: 404 });
+      return NextResponse.json({ message: 'Not Found Data' }, { status: 404 });
     }
-  } catch (err) {
-    console.error('Error fetching data:', err);
+  } catch (e) {
+    console.error('Error getting access token or user info:', e);
     return NextResponse.json(
-      { message: 'Internal Server Error', error: err },
+      { message: 'Internal Server Error' },
       { status: 500 }
     );
   }

@@ -10,8 +10,6 @@ import anime from 'animejs/lib/anime.es.js';
 import { Search } from 'lucide-react';
 
 // styles
-import '@/app/styles.css';
-
 // constants
 import { Images, tabNames } from '@/constants/home';
 
@@ -93,7 +91,7 @@ export default function Home() {
           onClick={handleInputComponent}
         />
       </header>
-      <main className=" mb-20 flex h-[430px] w-full flex-col items-center justify-center">
+      <main className=" w-full h-[430px] mb-20 flex flex-col justify-center items-center">
         {isSubjectVisible && (
           <div className="subject text-5xl ">세상 사는 눈을 키운다</div>
         )}
