@@ -7,11 +7,11 @@ import {
 
 export const AdminTabs = [
   {
-    name: 'Dashboard',
+    name: 'dashboard',
     icons: <ChartBarDecreasing className="ml-2 size-[18px]" />,
   },
   {
-    name: 'Analyst',
+    name: 'analysis',
     icons: <ChartNoAxesCombined className="ml-2 size-[18px]" />,
   },
   {
