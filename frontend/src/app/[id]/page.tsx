@@ -15,12 +15,13 @@ import { tabNames } from '@/constants/home';
 import { DataContext } from '@/contexts/home';
 
 // types
-import { articleContentType } from '@/types/news';
+import { ContextType, articleContentType } from '@/types/news';
 
 export default function NewsDetail() {
   const [content, setContent] = useState<string[]>([]);
 
-  const { selectedData, handleInput, keyDownEnter } = useContext(DataContext); // URL에서 id를 추출
+  const { selectedData, handleInput, keyDownEnter } =
+    useContext<ContextType>(DataContext); // URL에서 id를 추출
 
   // 컴포넌트 변경 boolean
   const [componentChange, setComponentChange] = useState<boolean>(false);
