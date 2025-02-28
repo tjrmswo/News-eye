@@ -97,7 +97,7 @@ export default function Home() {
           />
         </Link>
       </header>
-      <main className=" mb-20 flex h-md w-full flex-col items-center justify-center">
+      <main className="mb-20 flex h-sm w-full flex-col items-center justify-center shadow-lg">
         {isSubjectVisible && (
           <div className="subject text-5xl ">세상 사는 눈을 키운다</div>
         )}
