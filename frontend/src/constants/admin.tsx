@@ -15,11 +15,11 @@ export const AdminTabs = [
     icons: <ChartNoAxesCombined className="ml-2 size-[18px]" />,
   },
   {
-    name: 'LogOut',
+    name: 'logout',
     icons: <LogOut className="ml-2 size-[18px]" />,
   },
   {
-    name: 'DeleteID',
+    name: 'deleteID',
     icons: <UserRoundX className="ml-2 size-[18px]" />,
   },
 ];
