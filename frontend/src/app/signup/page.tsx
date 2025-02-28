@@ -11,44 +11,40 @@ import '@/app/signup/styles.css';
 
 export default function Signup() {
   return (
-    <div className="relative bottom-10 flex flex-row w-full h-[420px] items-center justify-around">
-      <div className="containerAnimation relative top-10 flex flex-col justify-around size-[500px] items-center bg-[#ffffff] rounded-[0.5rem] gap-4">
-        <div className="loginElement font-black text-2xl font-[Open_Sans] mt-4">
+    <div className="relative bottom-10 flex h-md w-full flex-row items-center justify-around">
+      <div className="containerAnimation relative top-10 flex size-lg flex-col items-center justify-around gap-4 rounded-lg bg-[#ffffff]">
+        <div className="loginElement mt-4 text-2xl font-[Open_Sans] font-black">
           회원가입
         </div>
 
-        <div className="loginElement flex flex-col w-full gap-5  items-center">
+        <div className="loginElement flex w-full flex-col items-center gap-5">
           <Input
             type="text"
-            className="w-[400px]"
+            className="w-sm"
             placeholder="아이디를 입력해주세요"
           />
           <Input
             type="text"
-            className="w-[400px]"
+            className="w-sm"
             placeholder="닉네임을 입력해주세요"
           />
           <Input
             type="password"
-            className="w-[400px]"
+            className="w-sm"
             placeholder="비밀번호를 입력해주세요"
           />
-          <Input
-            type="password"
-            className="w-[400px]"
-            placeholder="비밀번호 확인"
-          />
+          <Input type="password" className="w-sm" placeholder="비밀번호 확인" />
         </div>
-        <div className="loginElement flex flex-col items-center gap-2 h-[150px] ">
+        <div className="loginElement flex flex-col items-center gap-2 ">
           <Button
-            className="w-[400px] h-[40px] text-[1rem] rounded-[6px] hover:bg-[white] hover:text-black hover:border-[2.5px] hover:border-black font-sans"
+            className="w-sm rounded-sm font-sans text-[1rem] hover:border-2 hover:border-black hover:bg-[white] hover:text-black"
             size="lg"
           >
             Sign Up
           </Button>
 
           <Link href={'/login'}>
-            <span className="underline decoration-solid text-[0.8rem] text-[#c1c1c1] font-thin cursor-pointer">
+            <span className="cursor-pointer text-sm font-thin text-[#c1c1c1] underline decoration-solid">
               로그인
             </span>
           </Link>
@@ -62,25 +58,6 @@ export default function Signup() {
           width={400}
           height={400}
         />
-        {/* {signupImgElement.map(
-          ({ img, left, top, bottom, alt, animationClass }, index) => {
-            return (
-              <Image
-                key={index}
-                src={img}
-                alt={alt}
-                width={100}
-                height={100}
-                className={`absolute ${animationClass}`}
-                style={{
-                  left: `${left}px`,
-                  top: top ? `${top}px` : 'auto',
-                  bottom: bottom ? `${bottom}px` : 'auto',
-                }}
-              />
-            );
-          }
-        )} */}
       </div>
     </div>
   );

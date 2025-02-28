@@ -4,7 +4,6 @@ import { NewsApiServer } from '@/app/api/newsApi';
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const field = searchParams.get('field');
-  console.log(field);
 
   // field 파라미터 체크
   if (!field || Array.isArray(field)) {
@@ -14,10 +13,17 @@ export async function GET(request: Request) {
     );
   }
 
+  const sliceString = field.split('/');
+  const joinString = sliceString.join(' OR ');
+
   try {
-    const newsData = await NewsApiServer.get(
-      `/everything?q=${field}&apiKey=${process.env.NEXT_PUBLIC_NEWS_API_KEY}`
-    );
+    const newsData = await NewsApiServer.get(`/everything`, {
+      params: {
+        q: field.includes('/') ? joinString : field,
+        sortBy: 'relevancy',
+        apiKey: process.env.NEXT_PUBLIC_NEWS_API_KEY,
+      },
+    });
 
     if (newsData.data.articles.length > 0) {
       return NextResponse.json(newsData.data.articles, { status: 200 });

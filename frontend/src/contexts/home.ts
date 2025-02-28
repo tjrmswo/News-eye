@@ -1,7 +1,7 @@
 import { createContext, useContext } from 'react';
 
 // types
-import { ContextType } from '@/types/home';
+import { ContextType } from '@/types/news';
 
 export const DataContext = createContext<ContextType>({
   getData: () => {},
@@ -43,6 +43,8 @@ export const DataContext = createContext<ContextType>({
   searchNews: () => {},
   setComponentChange: () => {},
   setSearchWord: () => {},
+  analysisField: '',
+  setAnalysisField: () => {},
 });
 
 export const useDataContext = () => {

@@ -6,10 +6,15 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "lint:fix": "eslint src --fix && pnpm format",
+    "format": "prettier --write ."
   },
   "dependencies": {
+    "@heroui/button": "^2.2.13",
+    "@heroui/modal": "^2.2.11",
     "@radix-ui/react-slot": "^1.1.1",
+    "@swc/core": "^1.11.4",
     "@tanstack/react-query": "^5.64.2",
     "animejs": "^3.2.2",
     "axios": "^1.7.9",
@@ -37,9 +42,13 @@
     "client-only": "^0.0.1",
     "eslint": "^9.18.0",
     "eslint-config-next": "15.1.6",
+    "eslint-config-prettier": "^10.0.1",
+    "eslint-plugin-prettier": "^5.2.3",
+    "eslint-plugin-tailwindcss": "^3.18.0",
     "nanoid": "^5.0.9",
     "picocolors": "^1.1.1",
     "postcss": "^8.5.1",
+    "prettier": "^3.5.1",
     "source-map-js": "^1.2.1",
     "tailwindcss": "^3.4.17",
     "typescript": "^5.7.3"

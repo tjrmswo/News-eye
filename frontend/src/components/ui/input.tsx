@@ -1,8 +1,7 @@
 import * as React from 'react';
-
-import { cn } from '@/lib/utils';
-import { useState } from 'react';
 import { Eye, EyeOff } from 'lucide-react';
+import { useState } from 'react';
+import { cn } from '@/lib/utils';
 
 const Input = React.forwardRef<HTMLInputElement, React.ComponentProps<'input'>>(
   ({ className, type, ...props }, ref) => {
@@ -25,7 +24,7 @@ const Input = React.forwardRef<HTMLInputElement, React.ComponentProps<'input'>>(
         />
         {type === 'password' && (
           <button
-            className="absolute inset-y-0 right-3 flex items-center cursor-pointer"
+            className="absolute inset-y-0 right-3 flex cursor-pointer items-center"
             type="button"
             onClick={togglePasswordVisibility}
             aria-label="Toggle Password Visibility"

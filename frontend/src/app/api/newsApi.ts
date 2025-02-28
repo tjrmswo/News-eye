@@ -1,5 +1,5 @@
-import config from '@/config';
 import axios from 'axios';
+import config from '@/config';
 
 // client에서 요청하는 api
 const NewsApiClient = axios.create({

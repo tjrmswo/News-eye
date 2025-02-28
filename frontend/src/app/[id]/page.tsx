@@ -3,26 +3,25 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useContext, useEffect, useState } from 'react';
-
-// constants
-import { tabNames } from '@/constants/home';
-
 // libraries
 import { ChartBar, Search } from 'lucide-react';
+
+// apis
+import { NewsApiClient } from '@/app/api/newsApi';
+// constants
+import { tabNames } from '@/constants/home';
 
 // contexts
 import { DataContext } from '@/contexts/home';
 
-// apis
-import { NewsApiClient } from '@/app/api/newsApi';
-
 // types
-import { articleContentType } from '@/types/home';
+import { ContextType, articleContentType } from '@/types/news';
 
 export default function NewsDetail() {
   const [content, setContent] = useState<string[]>([]);
 
-  const { selectedData } = useContext(DataContext); // URL에서 id를 추출
+  const { selectedData, handleInput, keyDownEnter } =
+    useContext<ContextType>(DataContext); // URL에서 id를 추출
 
   // 컴포넌트 변경 boolean
   const [componentChange, setComponentChange] = useState<boolean>(false);
@@ -68,21 +67,21 @@ export default function NewsDetail() {
   }
 
   useEffect(() => {
-    if (!localStorage.getItem('newsData')) {
-      fetchArticleContent();
-    }
-  }, []);
-
-  useEffect(() => {
     // 컴포넌트가 unmount될 때 로컬 스토리지에서 데이터 삭제
     return () => {
       localStorage.removeItem('newsData');
     };
   }, []);
 
+  useEffect(() => {
+    if (!localStorage.getItem('newsData')) {
+      fetchArticleContent();
+    }
+  }, []);
+
   return (
-    <div className="min-h-screen flex flex-col items-center">
-      <header className="flex flex-row w-[800px] h-[150px] items-center justify-around">
+    <div className="flex min-h-screen flex-col items-center">
+      <header className="flex w-4xl flex-row items-center justify-around p-10">
         <div className="flex flex-row items-center">
           <Image
             src={'/images/news-eye.png'}
@@ -90,26 +89,30 @@ export default function NewsDetail() {
             height={55}
             alt="로고"
           />
-          <span className="font-black text-2xl font-[Open_Sans]">News-eye</span>
+          <span className="text-2xl font-[Open_Sans] font-black">News-eye</span>
         </div>
 
         {componentChange === true ? (
-          <div className="flex items-center justify-center w-[400px]">
-            <div className="input flex items-center justify-center w-[400px] h-[40px] bg-[#FAFAFA] rounded-lg text-[#818181]">
-              <input className="w-[380px] h-[30px] bg-[rgba(255,255,255,0)] border-b-2" />
+          <div className="flex w-md items-center justify-center">
+            <div className="input flex w-md items-center justify-center rounded-lg bg-[#FAFAFA] text-[#818181]">
+              <input
+                className="mb-2 w-sm border-b-2 bg-[rgba(255,255,255,0)] p-1"
+                onChange={(e) => handleInput(e)}
+                onKeyDown={(e) => keyDownEnter(e)}
+              />
             </div>
           </div>
         ) : (
           <div
             className={
-              'showTabs flex flex-row w-[400px] justify-between font-[Open_Sans]'
+              'showTabs flex w-md flex-row justify-between font-[Open_Sans]'
             }
           >
             {tabNames.map((name, i) => {
               return (
                 <Link href={`${name.href}`} key={i}>
                   <span
-                    className="p-2 rounded-2xl hover:bg-[#f3f3f3] focus:bg-[#f3f3f3] focus:text-[#797979] cursor-pointer transition-colors duration-300"
+                    className="cursor-pointer rounded-2xl p-2 transition-colors duration-300 hover:bg-[#f3f3f3] focus:bg-[#f3f3f3] focus:text-[#797979]"
                     tabIndex={0}
                   >
                     {name.name}
@@ -122,19 +125,19 @@ export default function NewsDetail() {
 
         <Search
           size={30}
-          className="text-[black] cursor-pointer hover:bg-[#f3f3f3] p-1 rounded-[0.2rem]"
+          className="cursor-pointer rounded-sm p-1 text-[black] hover:bg-[#f3f3f3]"
           onClick={handleInputComponent}
         />
         <Link href={'/admin'}>
           <ChartBar
-            className="text-[black] cursor-pointer hover:bg-[#f3f3f3] p-1 rounded-[0.2rem]"
+            className="cursor-pointer rounded-sm p-1 text-[black] hover:bg-[#f3f3f3]"
             size={30}
           />
         </Link>
       </header>
-      <main className="w-3/5 mb-20 flex flex-col justify-center gap-10">
+      <main className="mb-20 flex w-3/5 flex-col justify-center gap-10">
         <div className="flex flex-col gap-2">
-          <div className="text-[#BEBEBE] text-sm">
+          <div className="text-sm text-[#BEBEBE]">
             {selectedData?.author
               ? selectedData?.author
               : replaceNewsData('author')}
@@ -172,7 +175,7 @@ export default function NewsDetail() {
             height={500}
           />
         </div>
-        <div className="text-[#5C5959] text-sm">
+        <div className="text-sm text-[#5C5959]">
           {content.length > 0
             ? content.map((c, i) => (
                 <div className="mb-2" key={i}>
@@ -188,19 +191,19 @@ export default function NewsDetail() {
         </div>
       </main>
 
-      <footer className="flex flex-col items-center justify-evenly w-full h-[200px] bg-[#000000]">
-        <div className="relative left-[50] flex flex-row items-center">
-          <span className="relative top-3 h-[140px] p-10 font-black text-xl font-[Open_Sans] text-white">
+      <footer className="flex w-full flex-col items-center justify-evenly bg-[#000000] p-5">
+        <div className="relative left-[50] mb-3 flex flex-row items-center">
+          <span className="relative top-3 p-10 text-xl font-[Open_Sans] font-black text-white">
             News-eye
           </span>
-          <div className="h-[140px] p-10 border-l-[3px] font-black text-sm font-[Open_Sans] text-white">
+          <div className="border-l-2 p-10 text-sm font-[Open_Sans] font-black text-white">
             제작자: 서근재
             <br /> 연락처: 010-0000-0000
             <br /> 이메일: example@eaxmple.com
             <br /> 이 프로젝트는 개인 사이드 프로젝트입니다😁
           </div>
         </div>
-        <span className="relative right-8 text-white text-[0.8rem]">
+        <span className="relative right-8 text-xs text-white">
           Copyright ⓒ 서근재
         </span>
       </footer>

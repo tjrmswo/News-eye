@@ -7,19 +7,19 @@ import {
 
 export const AdminTabs = [
   {
-    name: 'Dashboard',
-    icons: <ChartBarDecreasing className="size-[18px] ml-2" />,
+    name: 'dashboard',
+    icons: <ChartBarDecreasing className="ml-2 size-[18px]" />,
   },
   {
-    name: 'Analyst',
-    icons: <ChartNoAxesCombined className="size-[18px] ml-2" />,
+    name: 'analysis',
+    icons: <ChartNoAxesCombined className="ml-2 size-[18px]" />,
   },
   {
-    name: 'LogOut',
-    icons: <LogOut className="size-[18px] ml-2" />,
+    name: 'logout',
+    icons: <LogOut className="ml-2 size-[18px]" />,
   },
   {
-    name: 'DeleteID',
-    icons: <UserRoundX className="size-[18px] ml-2" />,
+    name: 'deleteID',
+    icons: <UserRoundX className="ml-2 size-[18px]" />,
   },
 ];
