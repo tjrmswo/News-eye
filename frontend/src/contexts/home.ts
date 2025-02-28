@@ -43,6 +43,8 @@ export const DataContext = createContext<ContextType>({
   searchNews: () => {},
   setComponentChange: () => {},
   setSearchWord: () => {},
+  analysisField: '',
+  setAnalysisField: () => {},
 });
 
 export const useDataContext = () => {

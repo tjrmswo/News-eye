@@ -33,6 +33,8 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
   const [componentChange, setComponentChange] = useState<boolean>(false);
   // 단어 검색
   const [searchWord, setSearchWord] = useState<string>('');
+  // 분석 분야
+  const [analysisField, setAnalysisField] = useState<string>('');
 
   const getData = (data: Omit<NewsDataType, 'id'>, index: number) => {
     setSelectedData({
@@ -95,6 +97,8 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
         searchNews,
         setComponentChange,
         setSearchWord,
+        analysisField,
+        setAnalysisField,
       }}
     >
       {children}

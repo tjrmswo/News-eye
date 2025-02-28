@@ -30,6 +30,8 @@ export interface ContextType {
   searchNews: UseMutateFunction<NewsDataType[], Error, string, unknown>;
   setComponentChange: React.Dispatch<SetStateAction<boolean>>;
   setSearchWord: React.Dispatch<SetStateAction<string>>;
+  analysisField: string;
+  setAnalysisField: React.Dispatch<SetStateAction<string>>;
 }
 
 export interface articleContentType {
@@ -51,3 +53,9 @@ export type searchParamsType = {
   sort?: string;
   display?: number;
 };
+
+export interface AnalysisBarChartDataType {
+  index: number;
+  keyword: string;
+  count: number;
+}
