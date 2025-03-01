@@ -4,9 +4,10 @@ import ReactDOM from 'react-dom';
 
 interface ModalType {
   children: React.ReactNode;
-  handleModal: () => void;
+  handleModal: (modalName: string) => void;
   width: number;
   height: number;
+  currentPage: string;
 }
 
 export default function Modal({
@@ -14,6 +15,7 @@ export default function Modal({
   handleModal,
   width,
   height,
+  currentPage,
 }: ModalType) {
   const [modalRoot, setModalRoot] = useState<HTMLElement | null>(null);
 
@@ -27,7 +29,7 @@ export default function Modal({
   return ReactDOM.createPortal(
     <div
       className="fixed inset-0 z-50 flex items-center justify-center"
-      onClick={handleModal}
+      onClick={() => handleModal(currentPage)}
     >
       <div
         style={{ width: `${width}vw`, height: `${height}vh` }}
@@ -35,8 +37,11 @@ export default function Modal({
         onClick={(e) => e.stopPropagation()}
       >
         <header className="flex flex-row justify-end p-2">
-          <X className="cursor-pointer" size={15} onClick={handleModal} />{' '}
-          {/* 모달 닫기 버튼 */}
+          <X
+            className="cursor-pointer"
+            size={15}
+            onClick={() => handleModal(currentPage)}
+          />{' '}
         </header>
         {children}
       </div>

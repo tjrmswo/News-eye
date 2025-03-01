@@ -4,7 +4,6 @@ import Link from 'next/link';
 
 // constants
 import { AdminTabs } from '@/constants/admin';
-import { Reasons } from '@/constants/reason';
 
 // types
 import { IconMapType } from '@/types/admin';
@@ -17,12 +16,35 @@ import {
   UserRoundX,
 } from 'lucide-react';
 
-// libraries
-import { Modal, ModalContent, ModalBody, useDisclosure } from '@heroui/modal';
-import { Button } from '@heroui/button';
+// components
+import Modal from '@/components/modal';
+import DeleteModal from './DeleteModal';
+import { useEffect, useState } from 'react';
+import LogoutModal from './logOutModal';
 
 export default function SideTab() {
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const [modalStatus, setModalStatus] = useState({
+    delete: false,
+    logout: false,
+    currentPage: '',
+  });
+  const { currentPage } = modalStatus;
+
+  function handleModal(modalName: string) {
+    if (modalName === 'logout') {
+      setModalStatus({
+        ...modalStatus,
+        logout: !modalStatus.logout,
+        currentPage: modalName,
+      });
+    } else {
+      setModalStatus({
+        ...modalStatus,
+        delete: !modalStatus.delete,
+        currentPage: modalName,
+      });
+    }
+  }
 
   const IconMap: IconMapType = {
     dashboard: ChartBarDecreasing,
@@ -30,6 +52,10 @@ export default function SideTab() {
     logout: LogOut,
     deleteID: UserRoundX,
   };
+
+  useEffect(() => {
+    console.log(modalStatus);
+  }, [modalStatus]);
 
   return (
     <aside className="m-5 flex size-3xs flex-col items-center gap-3 rounded-md bg-white">
@@ -56,38 +82,21 @@ export default function SideTab() {
               <div key={i} className="flex flex-col w-[10rem]">
                 <div
                   className="flex w-full h-[1.5rem] flex-row items-center justify-center rounded-sm hover:bg-[#F3F3F3]"
-                  onClick={onOpen}
+                  onClick={() => handleModal(tab.name)}
                 >
                   {IconComponent ? <IconComponent className="w-4 h-4" /> : null}
                   <span className="ml-3 text-md">{tab.name}</span>
                 </div>
-                <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
-                  <ModalContent className="fixed w-full max-w-md min-h-[14rem] p-6 bg-white rounded-lg shadow-md top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 gap-3">
-                    {(onClose) => (
-                      <div className="flex flex-col items-center h-full">
-                        <ModalBody className="flex flex-col justify-between bg-yellow h-full text-center">
-                          <div className="text-lg font-semibold pt-5">
-                            로그아웃 하시겠습니까?
-                          </div>
-                          <div className="flex flex-row justify-between w-[14rem] mt-8">
-                            <Button
-                              className="px-7 border-2 border-black rounded-md"
-                              variant="solid"
-                            >
-                              확인
-                            </Button>
-                            <Button
-                              className="px-7 border-2 border-black rounded-md text-white bg-black "
-                              variant="bordered"
-                            >
-                              취소
-                            </Button>
-                          </div>
-                        </ModalBody>
-                      </div>
-                    )}
-                  </ModalContent>
-                </Modal>
+                {modalStatus.logout && (
+                  <Modal
+                    handleModal={handleModal}
+                    width={28}
+                    height={26}
+                    currentPage={currentPage}
+                  >
+                    <LogoutModal />
+                  </Modal>
+                )}
               </div>
             );
           } else if (tab.name === 'deleteID') {
@@ -95,24 +104,22 @@ export default function SideTab() {
               <div key={i} className="flex flex-col w-[10rem]">
                 <div
                   className="flex w-full h-[1.5rem] flex-row items-center justify-center rounded-sm hover:bg-[#F3F3F3]"
-                  onClick={onOpen}
+                  onClick={() => handleModal(tab.name)}
                 >
                   {IconComponent ? <IconComponent className="w-4 h-4" /> : null}
                   <span className="ml-3 text-md">{tab.name}</span>
                 </div>
-                <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
-                  <ModalContent className="fixed w-full max-w-md min-h-[14rem] p-6 bg-white rounded-lg shadow-md top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 gap-3">
-                    {(onClose) => (
-                      <div className="flex flex-col items-center h-full">
-                        <ModalBody className="flex flex-col justify-between bg-yellow h-full text-center">
-                          <span className="w-[6rem] text-lg font-semibold pt-5 border-b-2 border-black">
-                            회원탈퇴
-                          </span>
-                        </ModalBody>
-                      </div>
-                    )}
-                  </ModalContent>
-                </Modal>
+                {modalStatus.delete && (
+                  <Modal
+                    key={i}
+                    handleModal={handleModal}
+                    width={43}
+                    height={70}
+                    currentPage={currentPage}
+                  >
+                    <DeleteModal />
+                  </Modal>
+                )}
               </div>
             );
           }
