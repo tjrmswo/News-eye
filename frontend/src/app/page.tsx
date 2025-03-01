@@ -9,9 +9,8 @@ import anime from 'animejs/lib/anime.es.js';
 // icons
 import { ChartBar, Search } from 'lucide-react';
 
-// styles
 // constants
-import { Images, tabNames } from '@/constants/home';
+import { tabNames } from '@/constants/home';
 
 export default function Home() {
   const [isSubjectVisible, setSubjectVisible] = useState<boolean>(false);

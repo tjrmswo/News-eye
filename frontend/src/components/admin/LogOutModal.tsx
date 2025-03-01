@@ -1,9 +1,9 @@
-export default function LogOutModal() {
+export default function LogoutModal() {
   return (
     <div className="flex h-full flex-col items-center justify-evenly">
       <span>로그아웃 하시겠습니까?</span>
 
-      <div className="flex w-[70%] flex-row justify-between">
+      <div className="mb-2 flex w-[70%] flex-row justify-between">
         <button className="w-[100px] rounded-[0.3rem] border-2 border-[black] hover:bg-[black] hover:text-[white]">
           확인
         </button>

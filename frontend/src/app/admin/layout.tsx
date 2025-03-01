@@ -17,7 +17,8 @@ export default function RootLayout({
       style={{ fontFamily: 'SF_HambakSnow, sans-serif' }}
       className="flex min-h-screen justify-center bg-[#F4F4F4]"
     >
-      <div className="flex flex-row items-center justify-around w-full">
+      <div id="modal-container"></div>
+      <div className="flex w-full flex-row items-center justify-around">
         <SideTab />
         <div className="size-full p-7">{children}</div>
       </div>

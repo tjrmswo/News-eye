@@ -891,8 +891,6 @@
   animation-delay: 10s;
 }
 
-
-
 @layer base {
   * {
     @apply border-border outline-ring/50;
