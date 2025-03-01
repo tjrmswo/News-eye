@@ -16,7 +16,6 @@ import { NewsApiClient } from '@/app/api/newsApi';
 
 // constants
 import { tabNames } from '@/constants/home';
-import axios from 'axios';
 
 export default function Science() {
   const context = useContext<ContextType>(DataContext);
@@ -33,9 +32,7 @@ export default function Science() {
   // 경로 이름
   const pathName = usePathname();
 
-  const { data: ScienceData, isSuccess: ScienceDataSuccess } = useQuery<
-    NewsDataType[]
-  >({
+  const { data: ScienceData } = useQuery<NewsDataType[]>({
     queryKey: ['getScienceData'],
     queryFn: async () => {
       const response = await NewsApiClient.get(`/api/news/category?field=과학`);

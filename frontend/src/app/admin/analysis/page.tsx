@@ -119,7 +119,7 @@ export default function AnalystPage() {
         setAnalysisResults((prev) => [...prev, ...data]);
         setIsAnimating(true);
       },
-      onError: (err: any) => {
+      onError: (err) => {
         console.log('open AI API Error: ', err);
       },
     });
@@ -131,27 +131,27 @@ export default function AnalystPage() {
   }, [AnalysisDataSuccess]);
 
   return (
-    <div className="flex flex-col bg-white h-full p-7 rounded-xl">
+    <div className="flex h-full flex-col rounded-xl bg-white p-7">
       <div className="flex flex-row justify-between">
         <span className="text-lg">
           {localStorage.getItem('analysisField')} 분야 분석 결과
         </span>
       </div>
-      <div className="flex flex-col items-center justify-center gap-3 size-full">
+      <div className="flex size-full flex-col items-center justify-center gap-3">
         {AIAnalysisDataSuccess ? (
           analysisResults.map((result, i) => (
             <div
-              className={`opacity-0 flex items-center justify-center w-full ${isAnimating ? 'showAnwsers' : ''}`}
+              className={`flex w-full items-center justify-center opacity-0 ${isAnimating ? 'showAnwsers' : ''}`}
               key={i}
               style={{ animationDelay: `${i * 1}s` }}
             >
-              <div className="flex items-center w-2xl h-[5rem] bg-[#f1f1f1] rounded-tl-xl rounded-r-xl p-4 text-base font-extralight">
+              <div className="flex h-20 w-2xl items-center rounded-r-xl rounded-tl-xl bg-[#f1f1f1] p-4 text-base font-extralight">
                 {result}
               </div>
             </div>
           ))
         ) : (
-          <div className="w-xl flex flex-row items-center justify-center flex-1">
+          <div className="flex w-xl flex-1 flex-row items-center justify-center">
             <div className="wrapper">
               <div className="circle"></div>
               <div className="circle"></div>

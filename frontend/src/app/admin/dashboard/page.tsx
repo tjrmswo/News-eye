@@ -1,5 +1,5 @@
 'use client';
-import { Bar, Pie } from 'react-chartjs-2';
+import { Bar } from 'react-chartjs-2';
 import { Chart, registerables } from 'chart.js';
 import {
   AnalysisBarChartDataType,
@@ -215,7 +215,7 @@ export default function DashboardPage() {
         });
       }
     },
-    onError: (err: any) => {
+    onError: (err) => {
       console.log('open AI API Error: ', err);
     },
   });
@@ -231,7 +231,7 @@ export default function DashboardPage() {
   }, [barChartData]);
 
   return (
-    <div className="flex flex-col bg-white h-full p-7 rounded-">
+    <div className="rounded- flex h-full flex-col bg-white p-7">
       <div className="flex flex-row justify-between">
         <span className="text-xl">Dashboard</span>
 
@@ -246,9 +246,9 @@ export default function DashboardPage() {
       </div>
 
       <div className="flex h-lg flex-row flex-wrap items-center justify-around">
-        <div className="w-full flex justify-center">
+        <div className="flex w-full justify-center">
           {barChartData.length > 0 ? (
-            <Bar className="p-[1rem]" data={data} options={options} />
+            <Bar className="p-4" data={data} options={options} />
           ) : (
             <div id="wifi-loader">
               <svg className="circle-outer" viewBox="0 0 86 86">

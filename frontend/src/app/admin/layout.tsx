@@ -18,7 +18,7 @@ export default function RootLayout({
       className="flex min-h-screen justify-center bg-[#F4F4F4]"
     >
       <div id="modal-container"></div>
-      <div className="flex flex-row items-center justify-around w-full">
+      <div className="flex w-full flex-row items-center justify-around">
         <SideTab />
         <div className="size-full p-7">{children}</div>
       </div>

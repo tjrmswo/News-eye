@@ -63,29 +63,27 @@ export default function SideTab() {
         <Image src={'/images/news-eye.png'} alt="로고" width={50} height={50} />
         <span className="text-lg">News-eye</span>
       </div>
-      <div className="flex h-[8rem] cursor-pointer flex-col items-center justify-between">
+      <div className="flex h-32 cursor-pointer flex-col items-center justify-between">
         {AdminTabs.map((tab, i) => {
           const IconComponent = IconMap[tab.name];
           if (tab.name === 'dashboard' || tab.name === 'analysis') {
             return (
-              <Link className="w-[10rem]" key={i} href={`/admin/${tab.name}`}>
-                <div className="flex w-[7.8rem] h-[1.5rem] w-full flex-row items-center rounded-sm hover:bg-[#F3F3F3] px-2 justify-center">
-                  {IconComponent ? (
-                    <IconComponent className="size-[1rem]" />
-                  ) : null}
-                  <span className="ml-3 text-md">{tab.name}</span>
+              <Link className="w-40" key={i} href={`/admin/${tab.name}`}>
+                <div className="flex h-6 w-full flex-row items-center justify-center rounded-sm px-2 hover:bg-[#F3F3F3]">
+                  {IconComponent ? <IconComponent className="size-4" /> : null}
+                  <span className="text-md ml-3">{tab.name}</span>
                 </div>
               </Link>
             );
           } else if (tab.name === 'logout') {
             return (
-              <div key={i} className="flex flex-col w-[10rem]">
+              <div key={i} className="flex w-40 flex-col">
                 <div
-                  className="flex w-full h-[1.5rem] flex-row items-center justify-center rounded-sm hover:bg-[#F3F3F3]"
+                  className="flex h-6 w-full flex-row items-center justify-center rounded-sm hover:bg-[#F3F3F3]"
                   onClick={() => handleModal(tab.name)}
                 >
-                  {IconComponent ? <IconComponent className="w-4 h-4" /> : null}
-                  <span className="ml-3 text-md">{tab.name}</span>
+                  {IconComponent ? <IconComponent className="size-4" /> : null}
+                  <span className="text-md ml-3">{tab.name}</span>
                 </div>
                 {modalStatus.logout && (
                   <Modal
@@ -101,13 +99,13 @@ export default function SideTab() {
             );
           } else if (tab.name === 'deleteID') {
             return (
-              <div key={i} className="flex flex-col w-[10rem]">
+              <div key={i} className="flex w-40 flex-col">
                 <div
-                  className="flex w-full h-[1.5rem] flex-row items-center justify-center rounded-sm hover:bg-[#F3F3F3]"
+                  className="flex h-6 w-full flex-row items-center justify-center rounded-sm hover:bg-[#F3F3F3]"
                   onClick={() => handleModal(tab.name)}
                 >
-                  {IconComponent ? <IconComponent className="w-4 h-4" /> : null}
-                  <span className="ml-3 text-md">{tab.name}</span>
+                  {IconComponent ? <IconComponent className="size-4" /> : null}
+                  <span className="text-md ml-3">{tab.name}</span>
                 </div>
                 {modalStatus.delete && (
                   <Modal
