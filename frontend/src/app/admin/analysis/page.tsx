@@ -70,11 +70,6 @@ export default function AnalystPage() {
 
         const messages = [
           {
-            role: 'system',
-            content:
-              '답변은 항상 한국어로 해주세요. 그리고 답변 토큰의 갯수는 100으로 제한합니다',
-          },
-          {
             role: 'user',
             content:
               '내가 다음 보내주는 데이터들을 분석하고 많이 나온 키워드를 1~3번째를 뽑아서 나한테 제공해줘. 1.언급된 단어 (5회) -관련된 기사들의 내용 요약 같이 이런 형식으로 보여줘. 그리고 줄바꿈 되지 않게 출력해줘',
@@ -102,14 +97,14 @@ export default function AnalystPage() {
           }
         );
 
-        // console.log('open AI API 호출: ', response);
+        console.log('open AI API 호출: ', response);
 
         const comment = response.data.choices[0].message.content;
 
         console.log('AI 답변: ', comment);
 
         const answers: string[] = comment
-          .split(/(?<=[가-힣]+\.)\s*/)
+          .split(/\n/m)
           .filter((c: string) => /[1-9]\./.test(c)); // 각 문장에서 숫자와 점이 있는지 확인
         console.log('AI 답변 가공 중: ', answers);
 

@@ -41,7 +41,6 @@ export const domains = [
   'kbench.com',
   'www.globenewswire.com',
   'ml.globenewswire.com',
-  'star.ohmynews.com',
   'chunchu.tistory.com',
   'jsksoft.tistory.com',
   'ryueyes11.tistory.com',
@@ -49,4 +48,5 @@ export const domains = [
   'newspeppermint.com',
   'static.inews24.com',
   'ml-eu.globenewswire.com',
+  'image.inews24.com',
 ];

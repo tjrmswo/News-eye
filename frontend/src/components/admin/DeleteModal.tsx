@@ -14,7 +14,7 @@ export default function DeleteModal() {
         ))}
       </select>
 
-      <textarea className="h-2xs w-lg rounded-sm border-2 border-black p-1" />
+      <textarea className="max-h-2xs w-lg rounded-sm border-2 border-black p-1" />
     </div>
   );
 }

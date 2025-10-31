@@ -1,6 +1,7 @@
 'use client';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 // constants
 import { AdminTabs } from '@/constants/admin';
@@ -18,8 +19,8 @@ import {
 
 // components
 import Modal from '@/components/modal';
-import DeleteModal from './DeleteModal';
-import { useEffect, useState } from 'react';
+import DeleteModal from './deleteModal';
+
 import LogoutModal from './logOutModal';
 
 export default function SideTab() {

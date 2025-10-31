@@ -1,10 +1,16 @@
 import type { NextConfig } from 'next';
+
+/** @type {import('next').NextConfig} */
+
 import { domains } from '@/constants/domains';
+
+const patterns = domains.map((domain) => ({ hostname: domain }));
 
 const nextConfig: NextConfig = {
   /* config options here */
+  reactStrictMode: true,
   images: {
-    domains: domains, // 허용할 호스트를 추가
+    remotePatterns: patterns,
   },
 };
 

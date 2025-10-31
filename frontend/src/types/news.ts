@@ -59,3 +59,14 @@ export interface AnalysisBarChartDataType {
   keyword: string;
   count: number;
 }
+
+export type ServerNewsDataType = {
+  source: { id: string | null; name: string };
+  author: string;
+  title: string;
+  description: string;
+  url: string;
+  urlToImage: string;
+  publishedAt: string;
+  content: string;
+};
