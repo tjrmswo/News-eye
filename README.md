@@ -9,12 +9,12 @@
 <br />
 
 ## 📖 목차 <br />
-	•	프로젝트 소개<br />
-	•	주요 기능<br />
-	•	기술 스택<br />
-	•	성과 및 최적화<br />
-	•	실행 방법<br />
-	•	프로젝트 구조<br />
+	•	프로젝트 소개
+	•	주요 기능
+	•	기술 스택
+	•	성과 및 최적화
+	•	실행 방법
+	•	프로젝트 구조
 <br />
 <br />
 
@@ -42,9 +42,8 @@
 </td>
 </tr>
 </table>
-<br />
 
-### 주요 구현:
+주요 구현:<br />
 ```tsx
 // Next.js API Handler를 통한 CORS 우회
 export async function POST(req: NextApiRequest) {
@@ -69,9 +68,7 @@ export async function POST(req: NextApiRequest) {
 <br />
 
 ### 2️⃣ AI 기반 키워드 분석 시스템
-<div align="center">
-테이블 
-</div>토큰 관리 전략:
+토큰 관리 전략:
 ```
 입력 토큰: 10,000 ~ 15,000 (뉴스 기사 개수에 따라 변동)
 출력 토큰: 100개 제한
@@ -115,7 +112,7 @@ const filtering = answers.map((answer: string) => {
 ## 📊 성과 및 최적화
 ### 🎯 정량적 성과
 <div align="center">
-</div>⚡ 주요 개선사항
+</div>⚡ 주요 개선사항 <br />
 1. FSD 아키텍처 도입
 Before: 각 카테고리마다 개별 페이지 (중복 코드 730KB)
 After:  공통 컴포넌트 재사용 (149KB)
