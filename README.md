@@ -1,26 +1,31 @@
 # 👁️ News-eye
-<div align="center">AI 기반 뉴스 키워드 분석 플랫폼
-뉴스 트렌드를 한눈에 파악하는 인텔리전트 뉴스 분석 시스템
+<div align="start">프로젝트 소개: AI 기반 뉴스 키워드 분석 플랫폼
+뉴스 트렌드를 한눈에 파악하는 인텔리전트 뉴스 분석 시스템 </div><br /><br />
 
+<div align="center">
+프로젝트 링크 • 데모 보기 • 버그 제보 <br />
+</div>
+<br />
+<br />
 
+## 📖 목차 <br />
+	•	프로젝트 소개<br />
+	•	주요 기능<br />
+	•	기술 스택<br />
+	•	성과 및 최적화<br />
+	•	실행 방법<br />
+	•	프로젝트 구조<br />
+<br />
+<br />
 
-
-프로젝트 링크 • 데모 보기 • 버그 제보
-</div>📖 목차
-	•	프로젝트 소개
-	•	주요 기능
-	•	기술 스택
-	•	성과 및 최적화
-	•	트러블 슈팅
-	•	실행 방법
-	•	프로젝트 구조
-## 🎯 프로젝트 소개
-News-eye는 AI 기술을 활용하여 뉴스 트렌드를 자동으로 분석하고 시각화하는 인텔리전트 뉴스 플랫폼입니다.
 ## ✨ 핵심 가치
 	•	🤖 AI 기반 자동 분석: OpenAI API를 활용한 뉴스 키워드 자동 추출 및 요약
 	•	📊 데이터 시각화: Chart.js를 통한 직관적인 트렌드 분석
 	•	⚡ 실시간 크롤링: cheerio를 활용한 뉴스 본문 실시간 추출
 	•	💰 비용 최적화: 토큰 관리로 AI API 비용 효율화
+<br />
+<br />
+
 ## 🚀 주요 기능
 ### 1️⃣ 뉴스 본문 추출 시스템
 <table>
@@ -37,8 +42,9 @@ News-eye는 AI 기술을 활용하여 뉴스 트렌드를 자동으로 분석하
 </td>
 </tr>
 </table>
-주요 구현:
+<br />
 
+### 주요 구현:
 ```tsx
 // Next.js API Handler를 통한 CORS 우회
 export async function POST(req: NextApiRequest) {
@@ -60,6 +66,7 @@ export async function POST(req: NextApiRequest) {
   return NextResponse.json({ content: articleBody });
 }
 ```
+<br />
 
 ### 2️⃣ AI 기반 키워드 분석 시스템
 <div align="center">
@@ -79,6 +86,7 @@ AI 프롬프트 최적화:
            '줄바꿈 없이 출력해줘'
 }
 ```
+<br />
 
 ### 3️⃣ 정규표현식 엔진
 복합 키워드 자동 처리:
@@ -93,13 +101,16 @@ const filtering = answers.map((answer: string) => {
     .map(word => word
       .replace(/\*/g, '')
       .replace(/[.]/g, '')
-      .replace(/회/g, '')
+      .replace(/회/g,
+	  '')
     )
     .filter(word => 
       /^[0-9가-힣a-zA-Z]+(?:\([a-zA-Z가-힣]+\))?$/.test(word)
     );
 });
 ```
+<br />
+<br />
 
 ## 📊 성과 및 최적화
 ### 🎯 정량적 성과
@@ -109,14 +120,18 @@ const filtering = answers.map((answer: string) => {
 Before: 각 카테고리마다 개별 페이지 (중복 코드 730KB)
 After:  공통 컴포넌트 재사용 (149KB)
 Result: 중복 코드 80% 제거
+<br />
 2. 라우팅 최적화
 Before: 16개 개별 페이지
 After:  11개 동적 라우팅 페이지
 Result: 페이지 수 21.4% 감소, 유지보수성 향상
+<br />
 3. AI 비용 최적화
 입력 토큰: 10,000~15,000개
 출력 토큰: 100개 제한
 결과: $10 예산으로 충분한 운영
+<br />
+<br />
 
 ## 🚀 실행 방법
 Prerequisites
@@ -141,6 +156,7 @@ cp .env.example .env.local
 # 4. 개발 서버 실행
 npm run dev
 ```
+<br /><br />
 
 ## 📁 프로젝트 구조
 
