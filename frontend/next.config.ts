@@ -10,7 +10,20 @@ const nextConfig: NextConfig = {
   /* config options here */
   reactStrictMode: true,
   images: {
-    remotePatterns: patterns,
+    remotePatterns: [
+      {
+        protocol: 'http',
+        hostname: '**',
+        port: '',
+        pathname: '**',
+      },
+      {
+        protocol: 'https',
+        hostname: '**',
+        port: '',
+        pathname: '**',
+      },
+    ],
   },
 };
 
