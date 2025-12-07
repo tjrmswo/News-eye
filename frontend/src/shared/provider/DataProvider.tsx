@@ -1,42 +1,42 @@
-'use client';
-import { ReactNode, useState } from 'react';
-import { useRouter } from 'next/navigation';
+"use client";
+import { ReactNode, useState } from "react";
+import { useRouter } from "next/navigation";
 
 // types
-import { NewsDataType } from '@/types/news';
-import { useMutation } from '@tanstack/react-query';
+import { NewsDataType } from "@/types/news";
+import { useMutation } from "@tanstack/react-query";
 
 // apis
-import { NewsApiClient } from '@/app/api/newsApi';
+import { NewsApiClient } from "@/shared";
 
 // contexts
-import { DataContext } from '@/contexts/home';
+import { DataContext } from "@/contexts/home";
 
 export const DataProvider = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
   // [id] 데이터
   const [selectedData, setSelectedData] = useState<NewsDataType>({
     id: 0,
-    author: '',
-    content: '',
-    description: '',
-    publishedAt: '',
+    author: "",
+    content: "",
+    description: "",
+    publishedAt: "",
     source: {
       id: null,
       name: null,
     },
-    title: '',
-    url: '',
-    urlToImage: '',
+    title: "",
+    url: "",
+    urlToImage: "",
   });
   // 컴포넌트 변경 boolean
   const [componentChange, setComponentChange] = useState<boolean>(false);
   // 단어 검색
-  const [searchWord, setSearchWord] = useState<string>('');
+  const [searchWord, setSearchWord] = useState<string>("");
   // 분석 분야
-  const [analysisField, setAnalysisField] = useState<string>('');
+  const [analysisField, setAnalysisField] = useState<string>("");
 
-  const getData = (data: Omit<NewsDataType, 'id'>, index: number) => {
+  const getData = (data: Omit<NewsDataType, "id">, index: number) => {
     setSelectedData({
       id: index,
       ...data,
@@ -56,7 +56,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
   function handleInput(e: React.ChangeEvent<HTMLInputElement>) {
     const { value } = e.target;
     setSearchWord(value);
-    localStorage.setItem('searchWord', value);
+    localStorage.setItem("searchWord", value);
   }
 
   const { data: searchedData, mutate: searchNews } = useMutation<
@@ -64,9 +64,9 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
     Error,
     string
   >({
-    mutationKey: ['searchData'],
+    mutationKey: ["searchData"],
     mutationFn: async (searchWord: string) => {
-      const response = await NewsApiClient.post('/api/news/search', {
+      const response = await NewsApiClient.post("/api/news/search", {
         field: searchWord,
       });
 
@@ -78,7 +78,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
   });
 
   function keyDownEnter(e: React.KeyboardEvent<HTMLInputElement>) {
-    if (e.code === 'Enter') {
+    if (e.code === "Enter") {
       searchNews(searchWord);
     }
   }

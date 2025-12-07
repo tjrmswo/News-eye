@@ -1,24 +1,25 @@
-'use client';
+"use client";
 
-import Image from 'next/image';
-import Link from 'next/link';
-import { useContext, useEffect, useState } from 'react';
+import Image from "next/image";
+import Link from "next/link";
+import { useContext, useEffect, useState } from "react";
 // libraries
-import { ChartBar, Search } from 'lucide-react';
+import { ChartBar, Search } from "lucide-react";
 
 // apis
-import { NewsApiClient } from '@/app/api/newsApi';
+import { NewsApiClient } from "@/shared";
 // constants
-import { tabNames } from '@/constants/home';
+import { tabNames } from "@/shared";
 
 // contexts
-import { DataContext } from '@/contexts/home';
+import { DataContext } from "@/contexts/home";
 
 // types
-import { ContextType, articleContentType } from '@/types/news';
+import { ContextType, articleContentType } from "@/types/news";
+import { useQuery } from "@tanstack/react-query";
 
 export default function NewsDetail() {
-  const [content, setContent] = useState<string[]>([]);
+  // const [content, setContent] = useState<string[]>([]);
 
   const { selectedData, handleInput, keyDownEnter } =
     useContext<ContextType>(DataContext); // URL에서 id를 추출
@@ -30,34 +31,26 @@ export default function NewsDetail() {
     setComponentChange(!componentChange);
   }
 
-  const fetchArticleContent = async () => {
-    try {
-      const response: articleContentType = await NewsApiClient.post(
-        '/api/news/content',
-        {
+  const { data: newsData, isSuccess: getContentSuccess } =
+    useQuery<articleContentType>({
+      queryKey: ["fetchArticleContent"],
+      queryFn: async () => {
+        const response = await NewsApiClient.post("/api/news/content", {
           url: selectedData.url,
-        }
-      );
+        });
 
-      const data = response.data.content;
-      const control = data.split('\\n');
-      setContent(control);
+        console.log(response.data);
 
-      // LocalStorage에 저장: 데이터를 가져온 후
-      const newsData = {
-        ...selectedData,
-        content: control,
-      };
-
-      localStorage.setItem('newsData', JSON.stringify(newsData));
-    } catch (e) {
-      console.error('Error fetching article content:', e);
-      throw e;
-    }
-  };
+        return response.data;
+      },
+      retry: false,
+      refetchOnReconnect: false,
+      refetchOnMount: false,
+      refetchOnWindowFocus: false,
+    });
 
   function replaceNewsData(field: string) {
-    const newsData = localStorage.getItem('newsData');
+    const newsData = localStorage.getItem("newsData") || 0;
     if (!newsData) {
       return;
     }
@@ -69,22 +62,17 @@ export default function NewsDetail() {
   useEffect(() => {
     // 컴포넌트가 unmount될 때 로컬 스토리지에서 데이터 삭제
     return () => {
-      localStorage.removeItem('newsData');
+      localStorage.removeItem("newsData");
     };
   }, []);
 
-  useEffect(() => {
-    if (!localStorage.getItem('newsData')) {
-      fetchArticleContent();
-    }
-  }, []);
-
   return (
-    <div className="flex min-h-screen flex-col items-center">
+    <div className="flex min-h-screen w-full flex-col items-center">
       <header className="flex w-4xl flex-row items-center justify-around p-10">
         <div className="flex flex-row items-center">
           <Image
-            src={'/images/news-eye.png'}
+            className="size-auto"
+            src={"/images/news-eye.png"}
             width={55}
             height={55}
             alt="로고"
@@ -105,7 +93,7 @@ export default function NewsDetail() {
         ) : (
           <div
             className={
-              'showTabs flex w-md flex-row justify-between font-[Open_Sans]'
+              "showTabs flex w-md flex-row justify-between font-[Open_Sans]"
             }
           >
             {tabNames.map((name, i) => {
@@ -128,7 +116,7 @@ export default function NewsDetail() {
           className="cursor-pointer rounded-sm p-1 text-[black] hover:bg-[#f3f3f3]"
           onClick={handleInputComponent}
         />
-        <Link href={'/admin'}>
+        <Link href={"/admin"}>
           <ChartBar
             className="cursor-pointer rounded-sm p-1 text-[black] hover:bg-[#f3f3f3]"
             size={30}
@@ -140,26 +128,26 @@ export default function NewsDetail() {
           <div className="text-sm text-[#BEBEBE]">
             {selectedData?.author
               ? selectedData?.author
-              : replaceNewsData('author')}
+              : replaceNewsData("author")}
           </div>
           <div className="text-2xl">
             {selectedData?.title
               ? selectedData?.title
-              : replaceNewsData('title')}
+              : replaceNewsData("title")}
           </div>
           <div>
             <div className="text-[#B4B4B4]">
-              입력:{' '}
+              입력:{" "}
               {selectedData?.publishedAt
                 ? selectedData?.publishedAt
-                : replaceNewsData('publishedAt')}
+                : replaceNewsData("publishedAt")}
             </div>
             <Link
               href={selectedData && selectedData.url}
               className="text-sm text-[#d1d1d2]"
             >
-              원문 주소:{' '}
-              {selectedData.url ? selectedData.url : replaceNewsData('url')}
+              원문 주소:{" "}
+              {selectedData.url ? selectedData.url : replaceNewsData("url")}
             </Link>
           </div>
         </div>
@@ -167,8 +155,8 @@ export default function NewsDetail() {
           <Image
             src={
               selectedData?.urlToImage
-                ? selectedData?.urlToImage || '/images/news-eye.png'
-                : replaceNewsData('urlToImage')
+                ? selectedData?.urlToImage || "/images/news-eye.png"
+                : replaceNewsData("urlToImage")
             }
             alt="기사사진"
             width={500}
@@ -176,18 +164,13 @@ export default function NewsDetail() {
           />
         </div>
         <div className="text-sm text-[#5C5959]">
-          {content.length > 0
-            ? content.map((c, i) => (
-                <div className="mb-2" key={i}>
-                  {c}.
-                </div>
-              ))
-            : replaceNewsData('content') &&
-              replaceNewsData('content').map((c: string, i: number) => (
-                <div className="mb-2" key={i}>
-                  {c}.
-                </div>
-              ))}
+          {getContentSuccess &&
+            newsData.content.length > 0 &&
+            newsData.content.split("\\n").map((c, i) => (
+              <div className="mb-2" key={i}>
+                {c}.
+              </div>
+            ))}
         </div>
       </main>
 

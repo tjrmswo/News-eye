@@ -16,7 +16,6 @@
     "@radix-ui/react-slot": "^1.1.1",
     "@swc/core": "^1.11.4",
     "@tanstack/react-query": "^5.64.2",
-    "animejs": "^3.2.2",
     "axios": "^1.7.9",
     "chart.js": "^4.4.7",
     "cheerio": "^1.0.0",
@@ -50,9 +49,11 @@
     "nanoid": "^5.0.9",
     "picocolors": "^1.1.1",
     "postcss": "^8.5.1",
-    "prettier": "^3.5.1",
+    "prettier": "3.6.2",
+    "prettier-plugin-tailwindcss": "0.6.14",
     "source-map-js": "^1.2.1",
     "tailwindcss": "^3.4.17",
     "typescript": "^5.7.3"
-  }
+  },
+  "packageManager": "pnpm@10.15.1+sha512.34e538c329b5553014ca8e8f4535997f96180a1d0f614339357449935350d924e22f8614682191264ec33d1462ac21561aff97f6bb18065351c162c7e8f6de67"
 }

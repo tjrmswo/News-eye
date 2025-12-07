@@ -1,16 +1,16 @@
-'use client';
-import { Bar } from 'react-chartjs-2';
-import { Chart, registerables } from 'chart.js';
+"use client";
+import { Bar } from "react-chartjs-2";
+import { Chart, registerables } from "chart.js";
 import {
   AnalysisBarChartDataType,
   ContextType,
   NewsDataType,
-} from '@/types/news';
-import { useMutation } from '@tanstack/react-query';
-import axios from 'axios';
-import { useCallback, useContext, useEffect, useState } from 'react';
-import { NewsApiClient } from '@/app/api/newsApi';
-import { DataContext } from '@/contexts/home';
+} from "@/types/news";
+import { useMutation } from "@tanstack/react-query";
+import axios from "axios";
+import { useCallback, useContext, useEffect, useState } from "react";
+import { NewsApiClient } from "@/shared";
+import { DataContext } from "@/contexts/home";
 
 Chart.register(...registerables); // Chart.js의 모든 요소 등록
 
@@ -19,11 +19,11 @@ export default function DashboardPage() {
 
   const { setAnalysisField } = context;
   // 선택된 필드 데이터
-  const [selectedField, setSelectedField] = useState<string>('');
+  const [selectedField, setSelectedField] = useState<string>("");
 
   // BarChart 데이터
   const [barChartData, setBarChartData] = useState<AnalysisBarChartDataType[]>(
-    []
+    [],
   );
 
   const getField = useCallback(
@@ -32,10 +32,10 @@ export default function DashboardPage() {
       if (value !== selectedField) {
         setSelectedField(value);
         setAnalysisField(value);
-        localStorage.setItem('analysisField', value);
+        localStorage.setItem("analysisField", value);
       }
     },
-    []
+    [],
   );
 
   // Bar 차트 데이터
@@ -43,10 +43,10 @@ export default function DashboardPage() {
     labels: barChartData && barChartData.map((item) => item.keyword), // 모든 keyword를 labels 배열에 추가
     datasets: [
       {
-        label: 'Usage by News', // 그래프의 레이블
+        label: "Usage by News", // 그래프의 레이블
         data: barChartData && barChartData.map((item) => item.count), // 모든 count를 Y축 데이터에 추가
-        backgroundColor: 'rgba(180, 177, 177, 0.2)', // 막대의 배경색
-        borderColor: 'rgba(69, 69, 69, 0.2)', // 막대의 경계색
+        backgroundColor: "rgba(180, 177, 177, 0.2)", // 막대의 배경색
+        borderColor: "rgba(69, 69, 69, 0.2)", // 막대의 경계색
         borderWidth: 1, // 경계 두께
       },
     ],
@@ -59,14 +59,14 @@ export default function DashboardPage() {
         beginAtZero: true, // Y축 0부터 시작
         title: {
           display: true,
-          text: '사용 빈도', // Y축 제목
+          text: "사용 빈도", // Y축 제목
         },
       },
       x: {
         beginAtZero: true, // Y축 0부터 시작
         title: {
           display: true,
-          text: '기사에서 자주 나온 단어들', // X축 제목
+          text: "기사에서 자주 나온 단어들", // X축 제목
         },
       },
     },
@@ -77,10 +77,10 @@ export default function DashboardPage() {
     isSuccess: AnalysisDataSuccess,
     mutate: getAnalysisData,
   } = useMutation<NewsDataType[]>({
-    mutationKey: ['getAnalysisData', selectedField],
+    mutationKey: ["getAnalysisData", selectedField],
     mutationFn: async () => {
       const response = await NewsApiClient.get(
-        `/api/news/category?field=${selectedField}`
+        `/api/news/category?field=${selectedField}`,
       );
       const data = response.data;
 
@@ -97,10 +97,10 @@ export default function DashboardPage() {
   }, [selectedField]);
 
   const { mutate: openAIAPIMutate } = useMutation<string[][], void>({
-    mutationKey: ['getScienceData'],
+    mutationKey: ["getScienceData"],
     mutationFn: async () => {
       const descriptions = AnalysisData?.map(
-        (d: NewsDataType) => d.description
+        (d: NewsDataType) => d.description,
       );
 
       const jsonData = JSON.stringify(descriptions);
@@ -111,36 +111,36 @@ export default function DashboardPage() {
 
       const messages = [
         {
-          role: 'system',
+          role: "system",
           content:
-            '답변은 항상 한국어로 해주세요. 그리고 답변 토큰의 갯수는 100으로 제한합니다',
+            "답변은 항상 한국어로 해주세요. 그리고 답변 토큰의 갯수는 100으로 제한합니다",
         },
         {
-          role: 'user',
+          role: "user",
           content:
-            '내가 다음 보내주는 데이터들을 분석하고 많이 나온 키워드를 1~8번째를 뽑아서 나한테 제공해줘. 1.언급된 단어 - 횟수와 같이 간단한 내용 이런 형식으로 보여줘',
+            "내가 다음 보내주는 데이터들을 분석하고 많이 나온 키워드를 1~8번째를 뽑아서 나한테 제공해줘. 1.언급된 단어 - 횟수와 같이 간단한 내용 이런 형식으로 보여줘",
         },
         {
-          role: 'user',
+          role: "user",
           content: jsonData,
         },
       ];
 
       const gptInput = {
-        model: 'gpt-4o-mini',
+        model: "gpt-4o-mini",
         temperature: 0.5,
         messages: messages,
       };
 
       const response = await axios.post(
-        'https://api.openai.com/v1/chat/completions',
+        "https://api.openai.com/v1/chat/completions",
         gptInput,
         {
           headers: {
             Authorization: `Bearer ${process.env.NEXT_PUBLIC_OPEN_API_KEY}`,
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
-        }
+        },
       );
 
       // console.log('open AI API 호출: ', response);
@@ -150,22 +150,22 @@ export default function DashboardPage() {
       // console.log('AI 답변: ', comment);
 
       const answers: string[] = comment
-        .split('\n')
+        .split("\n")
         .filter((c: string) => /[1-9]./.test(c));
 
       // console.log('AI 답변 가공 중: ', answers);
 
       const filtering = answers.map((answer: string) => {
         const splitAnswer = answer
-          .split(' ')
+          .split(" ")
           .map((word) => {
             return word
-              .replace(/\*/g, '')
-              .replace(/[.]/g, '')
-              .replace(/회/g, '');
+              .replace(/\*/g, "")
+              .replace(/[.]/g, "")
+              .replace(/회/g, "");
           })
           .filter((word) =>
-            /^[0-9가-힣a-zA-Z]+(?:\([a-zA-Z가-힣]+\))?$/.test(word)
+            /^[0-9가-힣a-zA-Z]+(?:\([a-zA-Z가-힣]+\))?$/.test(word),
           );
 
         return splitAnswer;
@@ -180,7 +180,7 @@ export default function DashboardPage() {
         data.map((datum) => {
           // datum[0]은 index로 사용할 숫자
           const index = Number(datum[0]);
-          let keyword = '';
+          let keyword = "";
           let count = 0;
           let countFound = false;
 
@@ -196,7 +196,7 @@ export default function DashboardPage() {
               }
             } else {
               // 숫자가 아닌 경우 keyword에 합침
-              keyword += (keyword ? ' ' : '') + value; // 이전이 있으면 space 추가
+              keyword += (keyword ? " " : "") + value; // 이전이 있으면 space 추가
             }
           }
 
@@ -216,7 +216,7 @@ export default function DashboardPage() {
       }
     },
     onError: (err) => {
-      console.log('open AI API Error: ', err);
+      console.log("open AI API Error: ", err);
     },
   });
 

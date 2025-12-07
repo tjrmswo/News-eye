@@ -35,9 +35,7 @@ export interface ContextType {
 }
 
 export interface articleContentType {
-  data: {
     content: string;
-  };
 }
 
 export interface NaverNewsDataType {
